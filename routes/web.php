@@ -44,6 +44,8 @@ Route::group(['prefix' => '/'], function(){
 
   //route CRUD Company untuk driver
   Route::resource('driver', 'Company\DriverController');
+  Route::get('driver/{drivers}', 'Company\DriverController@show')->name('driver.show');
+  Route::get('/export', 'Company\DriverController@export')->name('driver.export');
 });
 
 //route Super Admin

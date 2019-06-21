@@ -32,7 +32,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <<form class="form-horizontal" action="{{ url('driver/'.$data_driver->id) }}" method="POST">
+                <form class="form-horizontal" action="{{ url('driver/'.$data_driver->id) }}" method="POST">
                   @csrf
                   @method('PATCH')
                   <div class="box-body">
@@ -69,6 +69,8 @@
 {{--                     <a href="#" type="submit" class="btn btn-success">Simpan</a>
                     <a href="#" type="submit" class="btn btn-danger pull-right">Batal</a> --}}
                     </div>
+                  </div>
+                </form>
               </div>
               <!-- /.box -->
             </div>

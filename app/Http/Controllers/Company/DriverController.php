@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Driver;
+use App\Exports\DriversExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Driver;
 
 class DriverController extends Controller
 {
@@ -59,7 +61,7 @@ class DriverController extends Controller
 
         $driver->save();
 
-        return redirect('driver');
+        return redirect('driver')->with('sukses', 'data berhasil ditambah');
     }
 
     /**
@@ -70,7 +72,10 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        //
+        $data_driver = Driver::findOrFail($id);
+        return view('pages.company.driver.detail-driver',compact('data_driver'));
+        // $data_driver = Driver::findorFail($id);
+        // return view('pages.company.driver.detail-driver', [$data_driver => Driver::findOrFail($id)]);
     }
 
     /**
@@ -111,7 +116,7 @@ class DriverController extends Controller
 
         $driver->save();
 
-        return redirect('driver');
+        return redirect('driver')->with('sukses', 'data berhasil di update !!!');
     }
 
     /**
@@ -125,6 +130,11 @@ class DriverController extends Controller
         $data_driver = \App\Driver::find($id);
         $data_driver->delete();
 
-        return redirect()->back();
+        return redirect('driver')->with('sukses', 'data berhasil dihapus');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new DriversExport, 'Driver.xlsx');
     }
 }

@@ -3,10 +3,10 @@
 use Illuminate\Http\Request;
 
 //Route Group API Company
-Route::group(['prefix' => 'v1'], function() {
+// Route::group(['prefix' => 'v1'], function() {
 	// Route::resource('pesan', 'API\Company\PesanController');
 
-});
+// });
 
 
 //adminCv atu Company
