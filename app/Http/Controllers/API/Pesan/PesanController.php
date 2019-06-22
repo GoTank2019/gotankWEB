@@ -8,6 +8,7 @@ use App\Pesan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Jam;
+use App\Company;
 
 class PesanController extends Controller
 {
@@ -20,31 +21,38 @@ class PesanController extends Controller
     {
         $company_id = $request->get('company_id');
         $date = Carbon::parse($request->get('date'));
+        $driver_count = Company::find($company_id)->first()->drivers()->count();
 
         $pesanan =  DB::table('pesans')
-                    ->select('jam_id', DB::raw('count(*) as total'))->where('company_id', $company_id)
-                    ->where('tgl_pesan', $date)
-                    ->where('status', '<>', 'Batal')
-                    ->groupBy('jam_id')
-                    ->get();
+            ->select('jam_id', DB::raw('count(*) as total'))->where('company_id', $company_id)
+            ->where('tgl_pesan', $date)
+            ->where('status', '<>', 'Batal')
+            ->groupBy('jam_id')
+            ->get();
 
         $jams = Jam::all();
 
         $data_jam = [];
-        $key1 = '';
-        foreach($jams as $key => $value){
-            foreach($pesanan as $p){
-                if($jams[$key]->id == $p->jam_id){
-                    $key1 = $key;
+        $check = FALSE;
+        foreach ($jams as $jam) {
+            foreach ($pesanan as $p) {
+                if ($jam->id == $p->jam_id && $p->total >= $driver_count) {
+                    $check = TRUE;
+                    break;
                 }
             }
-            unset($jams[$key1]);
+
+            if (!$check) {
+                $data_jam[] = $jam;
+            }
+
+            $check = FALSE;
         }
 
 
 
         $data = [
-            'data' => $jams,
+            'data' => $data_jam,
             'message'   => 'Success'
         ];
         return response()->json($data);
