@@ -56,7 +56,7 @@ class DriverController extends Controller
         $driver->name = $nama;
         $driver->email = $email;
         $driver->password = bcrypt($password);
-        $driver->api_token = bcrypt($email);
+        $driver->api_token = bcrypt($nama);
         $driver->phone = $phone;
 
         $driver->save();
@@ -111,7 +111,7 @@ class DriverController extends Controller
         $driver->name = $nama;
         $driver->email = $email;
         $driver->password = bcrypt($password);
-        $driver->api_token = bcrypt($email);
+        $driver->api_token = bcrypt($nama);
         $driver->phone = $phone;
 
         $driver->save();

@@ -49,7 +49,7 @@
                           <td>{{ $no++ }}</td>
                           <td>{{ $companies->name }}</td>
                           <td>{{ $companies->email }}</td>
-                          <td align = "center"><img src="{{asset('images/'.$companies->avatar)}}" width="45px"; height="45px";></td>
+                          <td align = "center"><img src="{{asset('img/'.$companies->avatar)}}" width="45px"; height="45px";></td>
                           <td>{{ $companies->phone }}</td>
                           <td>{{ $companies->address }}</td>
                           <td>

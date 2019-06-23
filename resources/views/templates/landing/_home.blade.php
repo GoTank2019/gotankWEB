@@ -52,6 +52,11 @@
           </p>
 
           <br>
+          <p class="white-text">
+            
+          </p>
+
+          <br>
           <br>
           <p class="white-text">Pengguna Jasa bisa Download App di bawah</p>
           <button href="#" type="button" class="btn btn-primary btn-lg">Download App GoTank</button>
