@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Auth;
+// use App\Driver;
 
 class Company extends Authenticatable implements MustVerifyEmail
 {
@@ -23,13 +24,18 @@ class Company extends Authenticatable implements MustVerifyEmail
    * @var array
    */
   protected $hidden = [
-      'password', 'remember_token',
+      'password', 'remember_token','created_at'
   ];
 
   protected $casts = [
       'email_verified_at' => 'datetime',
   ];
 
+  /**
+  *
+  * Method One to Many Company -> Drivers
+  *
+  */
   public function drivers()
   {
     return $this->hasMany(Driver::class, 'company_id');

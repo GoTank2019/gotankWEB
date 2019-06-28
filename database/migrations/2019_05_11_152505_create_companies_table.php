@@ -20,12 +20,14 @@ class CreateCompaniesTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('harga')->nullable();
             $table->text('description')->nullable();
             $table->string('avatar')->default('default.jpg');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->string('phone',13)->unique();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     /**

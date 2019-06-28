@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdminTanggapansTable extends Migration
+class CreateCompanyTanggapansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class CreateAdminTanggapansTable extends Migration
      */
     public function up()
     {
-        Schema::defaultStringLength(191);
-        Schema::create('admin_tanggapans', function (Blueprint $table) {
+        Schema::create('company_tanggapans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('ratting');
             $table->string('komentar',250);
@@ -35,6 +34,6 @@ class CreateAdminTanggapansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_tanggapans');
+        Schema::dropIfExists('company_tanggapans');
     }
 }

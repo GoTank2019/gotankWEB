@@ -41,6 +41,7 @@ Route::group(['prefix' => '/'], function(){
 
   //route CRUD pemesanan
   Route::resource('pesan', 'Company\PesanController');
+  Route::get('export-pesan', 'Company\PesanController@export')->name('pesan.export');
 
   //route CRUD Company untuk driver
   Route::resource('driver', 'Company\DriverController');

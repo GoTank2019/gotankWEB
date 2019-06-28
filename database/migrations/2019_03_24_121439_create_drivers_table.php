@@ -16,7 +16,8 @@ class CreateDriversTable extends Migration
         Schema::defaultStringLength(191);
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('company_id')->unsigned();
+            $table->unsignedbigInteger('company_id');
+            // $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -25,6 +26,7 @@ class CreateDriversTable extends Migration
             $table->string('api_token');
             $table->string('avatar')->default('default.jpg')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

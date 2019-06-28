@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Driver;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Driver;
 
 class DriverController extends Controller
 {
@@ -14,7 +15,19 @@ class DriverController extends Controller
      */
     public function index()
     {
-        //
+        $driver = Driver::all();
+        if ($driver->isEmpty()) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Not Found'
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 1,
+                'message' => 'Berhasil',
+                'data' => $driver
+            ],200);
+        }
     }
 
     /**

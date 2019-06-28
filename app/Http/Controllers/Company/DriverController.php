@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Exports\DriversExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Driver;
+use App\Company;
 
 class DriverController extends Controller
 {
@@ -43,9 +44,14 @@ class DriverController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         //isian dari form tambah data
+        // $data_driver = Company::findOrFail($request->get('id'));
+        // $driver = $data_driver->drivers()->get();
+
+        $company_id = $request->company_id;
         $nama = $request->name;
         $email = $request->email;
         $password = $request->password;
@@ -53,6 +59,7 @@ class DriverController extends Controller
 
         //isian dari table database
         $driver = new \App\Driver;
+        $driver->company_id = $company_id;
         $driver->name = $nama;
         $driver->email = $email;
         $driver->password = bcrypt($password);
@@ -70,8 +77,10 @@ class DriverController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $data_driver = Driver::find($id);
+        $company = $request->user()->id;
         $data_driver = Driver::findOrFail($id);
         return view('pages.company.driver.detail-driver',compact('data_driver'));
         // $data_driver = Driver::findorFail($id);

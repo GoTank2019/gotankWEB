@@ -28,7 +28,7 @@ Route::post('user/image/{id}', 'API\User\AuthUserController@updateImage');
 Route::post('driver/register', 'API\Driver\AuthDriverController@register');
 Route::post('driver/login', 'API\Driver\AuthDriverController@login');
 
-Route::get('driver/{company}', 'API\Driver\DriverController@index');
+Route::get('driver', 'API\Driver\DriverController@index');
 Route::get('company-driver', 'API\Company\CompanyController@driver');
 Route::get('driver-company', 'API\Company\CompanyController@company');
 
@@ -36,3 +36,7 @@ Route::get('driver-company', 'API\Company\CompanyController@company');
 Route::get('pesan/getjam', 'API\Pesan\PesanController@getJam')->name('pesan.jam');
 Route::resource('pesan', 'API\Pesan\PesanController')
     ->except(['create', 'update', 'edit']);
+Route::get('pesan/{id}','API\Pesan\PesanController@show');
+Route::get('pesan/detail/{id}','API\Pesan\PesanController@showDetailHistory');
+Route::get('showJam', 'API\Pesan\PesanController@showJam')->name('pesan.show');
+Route::post('pesan/bukti/{id}', 'API\Pesan\PesanController@uploadBukti');

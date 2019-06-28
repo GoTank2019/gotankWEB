@@ -17,14 +17,14 @@
 
       <li>
 
-         <a href="dashboard">
+         <a href="{{ url('beranda') }}">
             <i class="fa fa-dashboard"></i> Dashboard
             </a>
 
       </li>
 
       <li>
-        <a href="/beranda/datapesan">
+        <a href="{{ url('pesan') }}">
           <i class="fa fa-folder"></i>
           <span>Pesan</span>
 

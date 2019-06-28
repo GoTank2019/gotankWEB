@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use DB;
 use Auth;
+use App\Company;
 
 class Driver extends Authenticatable
 {
@@ -19,9 +21,12 @@ class Driver extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password','created_at','updated_at','email_verified_at'
     ];
 
+    /**
+    * Method Many to Many Driver untuk Company dan Pesan
+    */
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
@@ -31,4 +36,8 @@ class Driver extends Authenticatable
     {
         return $this->hasMany(Pesan::class);
     }
+
+    /**
+    * Method One to Many Driver -> Company
+    */
 }

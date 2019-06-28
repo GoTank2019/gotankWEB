@@ -6,129 +6,6 @@
   
 @endpush
 
-@section('content1')
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Modals
-        <small>new</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">UI</a></li>
-        <li class="active">Modals</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Modal Examples</h3>
-            </div>
-            <div class="box-body">
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
-                Launch Success Modal
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-        <div class="modal modal-success fade" id="modal-success">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Success Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body&hellip;</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-
-        <div class="modal modal-danger fade" id="modal-danger">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Danger Modal</h4>
-              </div>
-              <div class="modal-body">
-                 <!-- form start -->
-                <form class="form-horizontal">
-                  <div class="box-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Alamat</label>
-                            <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">No Hp</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                            </div>
-                        </div>
-                  </div>
-                  <!-- /.box-body -->
-                  <div class="box-footer">
-                    <div class="col-sm-2 col-sm-offset-6"> 
-                    <a href="#" type="submit" class="btn btn-success">Simpan</a>
-                    <a href="#" type="submit" class="btn btn-danger pull-right">Batal</a>
-                    </div>
-                  </div>
-                  <!-- /.box-footer -->
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-@endsection
-
 @section('content')
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -155,44 +32,85 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="driver.create" method="POST">
-                  <div class="box-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
+                <form class="form-horizontal" action="{{ url('pesan') }}" method="POST">
+                  @csrf
+                  <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                            <select class="form-control" id="inputEmail3" name="company_id">
+                              <option value="" style="display: none;">-Pilih Company-</option>
+                              @foreach($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                              @endforeach
+{{--                               <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                              <option value="Dikonfirmasi">Dikonfirmasi</option>
+                              <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                              <option value="Selesai">Selesai</option>
+                              <option value="Batal">Batal</option> --}}
+                            </select>
+                          </div>
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">User ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="user_id" class="form-control" id="inputEmail3" placeholder="company_id">
+                            </div>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Tgl Pesan</label>
+                            <div class="col-sm-10">
+                                <input type="date" name="tgl_pesan" class="form-control" id="inputEmail3">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Alamat</label>
+                          <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
                             <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                <input type="time" name="jam_id" class="form-control" id="inputEmail3">
+                            </div>
+                          {{-- <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
+                          <div class="col-sm-10">
+                            <select class="form-control" id="inputEmail3">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
+                          </div> --}}
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Desc Pesan</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="deskripsi_pesan" class="form-control" id="inputEmail3" placeholder="Deskripsi Pesan">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">No Hp</label>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Struk Pembayaran</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                <input type="file" name="bukti_pembayaran" class="form-control" id="inputEmail3" placeholder="Bukti Pembayaran">
                             </div>
                         </div>
                         <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                            </div>
+                          <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                          <div class="col-sm-10">
+                            <select class="form-control" id="inputEmail3">
+                              <option value="" style="display: none">--Pilih Status--</option>
+                              <option value="Belum Dibayar"></option>
+                              <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                              <option value="Dikonfirmasi">Dikonfirmasi</option>
+                              <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                              <option value="Selesai">Selesai</option>
+                              <option value="Batal">Batal</option>
+                            </select>
+                          </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                            </div>
-                        </div>
-                  </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
                     <div class="col-sm-2 col-sm-offset-6"> 
-                    <a href="#" type="submit" class="btn btn-success">Simpan</a>
-                    <a href="#" type="submit" class="btn btn-danger pull-right">Batal</a>
+                      <button class="btn btn-success" type="submit">Tambah</button>
+                      <button class="btn btn-danger pull-right" type="reset">Batal</button>
+{{--                     <a href="#" type="submit" class="btn btn-success">Simpan</a>
+                    <a href="#" type="submit" class="btn btn-danger pull-right">Batal</a> --}}
                     </div>
                   </div>
                   <!-- /.box-footer -->

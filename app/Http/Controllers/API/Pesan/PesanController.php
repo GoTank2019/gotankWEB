@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use App\Jam;
 use App\Company;
 use Illuminate\Support\Facades\Validator;
+use Auth;
+use App\User;
+use App\Driver;
 
 class PesanController extends Controller
 {
@@ -53,10 +56,12 @@ class PesanController extends Controller
 
 
         $data = [
-            'data' => $data_jam,
-            'message'   => 'Success'
+            'status' => 1,
+            'message'   => 'Success',
+            'data' => $data_jam
+            
         ];
-        return response()->json($data);
+        return response()->json($data,200);
     }
 
     public function store(Request $request)
@@ -66,7 +71,7 @@ class PesanController extends Controller
             'user_id'   => 'required',
             'tgl_pesan' => 'required',
             'jam_id' => 'required',
-            'deskripsi_pesan' => 'required',
+            // 'deskripsi_pesan' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -83,7 +88,7 @@ class PesanController extends Controller
             'user_id'       => $request->user_id,
             'tgl_pesan'     => Carbon::parse($request->get('tgl_pesan')),
             'jam_id'        => $request->jam_id,
-            'deskripsi_pesan'   => $request->deskripsi_pesan,
+            // 'deskripsi_pesan'   => $request->deskripsi_pesan,
         ];
 
         $pesan = Pesan::create($data);
@@ -106,11 +111,142 @@ class PesanController extends Controller
 
     public function show($id)
     {
-        //
+        // $id = Auth::user()->id;
+        //menampilkan data dengan inner join
+        $history = DB::table('pesans')
+                    ->join('companies','companies.id','=','pesans.company_id')
+                    ->select('pesans.id','companies.name','companies.avatar','pesans.tgl_pesan','pesans.status')
+                    ->where('pesans.user_id',$id)
+                    ->get();
+        return response()->json([
+            'message' => 'Berhasil',
+            'status' => 1,
+            'data' => $history
+        ]);
+    }
+
+    public function showDetailHistory($id)
+    {
+        $pesan = DB::table('pesans')
+                        ->join('companies', 'companies.id', '=', 'pesans.company_id')
+                        ->select('pesans.id','companies.name','companies.avatar','companies.harga','pesans.tgl_pesan','pesans.status','pesans.user_id','pesans.driver_id')
+                        ->where('pesans.id',$id)
+                        ->first();
+        $user = User::where('id',$pesan->user_id)->first();
+        $driver = Driver::where('id',$pesan->driver_id)->first();
+        // $company = Company::where('id', $pesan->company_id)->first();
+        if ($driver == null) {
+            return response()->json([
+            'message' => 'Berhasil',
+            'status' => 1,
+            'data' => [
+                'id' => $pesan->id,
+                'name' => $pesan->name,
+                'harga' => $pesan->harga,
+                'avatar' => $pesan->avatar,
+                'tgl_pesan' => $pesan->tgl_pesan,
+                'status' => $pesan->status,
+                'user' => [
+                    'id' => $user->id,
+                    'address' => $user->address
+                ]
+            ]
+        ]);
+        }
+        return response()->json([
+            'message' => 'Berhasil',
+            'status' => 1,
+            'data' => [
+                'id' => $pesan->id,
+                'name' => $pesan->name,
+                'harga' => $pesan->harga,
+                'avatar' => $pesan->avatar,
+                'tgl_pesan' => $pesan->tgl_pesan,
+                'status' => $pesan->status,
+                'user' => [
+                    'id' => $user->id,
+                    'address' => $user->address
+                ],
+                'driver' =>[
+                    'id' => $driver->id,
+                    'name' => $driver->name
+                ]
+            ]
+        ]);
     }
 
     public function destroy($id)
     {
         //
     }
+
+    public function showJam()
+    {
+        $data_jam = Jam::all();
+        if ($data_jam->isEmpty()) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Not Found',
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 1,
+                'message' => 'Berhasil',
+                'data' => $data_jam
+            ], 200);
+        }
+    }
+
+    public function uploadBukti(Request $request, $id)
+    {
+      $pesan = Pesan::find($id);
+
+      if ($request->bukti_pembayaran) {
+        $image_path = $pesan->bukti_pembayaran;
+        if ($image_path == null ) {
+          $imgName = $request->file('bukti_pembayaran')->getClientOriginalName();
+          $request->file('bukti_pembayaran')->move('img', $imgName);
+
+          $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
+          $pesan->update([
+              'bukti_pembayaran' => $imgName,
+            ]);
+        }else {
+          if (\File::exists(public_path('img/'.$image_path))) {
+              \File::delete(public_path('img/'.$image_path));
+          }
+          $imgName = $request->file('bukti_pembayaran')->getClientOriginalName();
+          $request->file('bukti_pembayaran')->move('img', $imgName);
+
+          $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
+          $pesan->update([
+              'bukti_pembayaran' => $imgName,
+            ]);
+        }
+    } else{
+        return response()->json([
+            'message' => 'Gambar tidak tersimpan',
+            'status' => 0,
+        ],200);
+    }
+
+    return response()->json([
+        'status'=> 1,
+        'message'=> 'Berhasil',
+        'data' => $pesan
+    ],200);
+
+    }
+
+    // public function status(Request $request, $id)
+    // {
+    //     $status = Pesan::find($id)
+    //     if ($request->status) {
+    //         $keterangan = $status->status;
+
+    //         if ($keterangan == 'Belum Dibayar') {
+                
+    //         }
+    //     }
+    // }
 }

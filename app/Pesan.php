@@ -12,6 +12,7 @@ class Pesan extends Model
     use SoftDeletes;
     protected $table = 'pesans';
     protected $guarded = [];
+    // protected $hidden = ['company_id']
 
     public function company()
     {
@@ -20,7 +21,7 @@ class Pesan extends Model
 
     public function driver()
     {
-        return $this->belongsTo(Driver::class);
+        return $this->belongsTo(Driver::class, 'driver_id');
     }
 
     public function user()

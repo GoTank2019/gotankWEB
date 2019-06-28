@@ -54,6 +54,12 @@
                   <form class="form-horizontal" action="{{ url('driver') }}" method="POST">
                   @csrf
                   <div class="box-body">
+                      <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="company_id" class="form-control" id="inputEmail3" placeholder="company_id" value="{{ Auth::user()->company_id }}">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-10">
@@ -96,6 +102,7 @@
                   <thead>
                   <tr>
                     <th style="width: 10px">No</th>
+                    <th style="width: 10px">Company ID</th>
                     <th >Nama</th>
                     <th >Email</th>
                     <th >Photo</th>
@@ -113,6 +120,9 @@
                       @foreach($data_driver as $drivers)
                         <tr>
                           <td>{{ $no++ }}</td>
+                          <td>
+                            {{ $drivers->company_id }}
+                          </td>
                           <td>{{ $drivers->name }}</td>
                           <td>{{ $drivers->email }}</td>
                           <td align = "center"><img src="{{asset('img/'.$drivers->avatar)}}" width="45px"; height="45px";>
