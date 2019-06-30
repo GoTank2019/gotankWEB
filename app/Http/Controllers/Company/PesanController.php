@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Exports\PesansExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Pesan;
 use App\Driver;
@@ -52,28 +53,47 @@ class PesanController extends Controller
      */
     public function store(Request $request)
     {
-        $company_id = $request->company_id;
-        $driver_id = $request->driver_id;
-        $user_id = $request->user_id;
-        $tgl_pesan = $request->tgl_pesan;
-        $jam_id = $request->jam_id;
-        $deskripsi_pesan = $request->deskripsi_pesan;
-        $bukti_pembayaran = $request->bukti_pembayaran;
-        $status = $request->status;
+        $request->validate([
+            'company_id' => 'required',
+            'tgl_pesan' => 'required',
+            // 'jam_id' => 'required',
+        ]);
 
-        //create to database
-        $pesan = new \App\Pesan;
-        $pesan->company_id = $company_id;
-        $pesan->driver_id = $driver_id;
-        $pesan->user_id = $user_id;
-        $pesan->tgl_pesan = Carbon::parse($request->get('tgl_pesan'));
-        $pesan->jam_id = $jam_id;
-        $pesan->deskripsi_pesan = $deskripsi_pesan;
-        $pesan->status = $status;
+        $data = [
+            'company_id'    => $request->company_id,
+            'user_id'       => $request->user_id,
+            'tgl_pesan'     => Carbon::parse($request->get('tgl_pesan')),
+            'jam_id'        => 1,
+            'status' => $request->status,
+            // 'deskripsi_pesan'   => $request->deskripsi_pesan,
+        ];
 
-        $pesan->save();
+        $pesan = Pesan::create($data);
+        if($pesan)
+            return redirect('pesan')->with('sukses', 'Sukses Tambah Data');
 
-        return redirect('pesan');
+        return redirect('pesan')->with('error', 'Gagal Tambah Data');
+    }
+
+    public function konfirmasi(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'driver_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('pesan')->with('error', 'Driver Kosong');
+        }
+
+        $pesan_id = $request->id;
+
+        $pesan = Pesan::find($pesan_id);
+        $pesan->driver_id = $request->driver_id;
+
+        if($pesan->save())
+            return redirect('pesan')->with('sukses', 'konfirmasi sukses');
+
+        return redirect('pesan')->with('error', 'konfirmasi error');
     }
 
     /**

@@ -210,6 +210,7 @@ class PesanController extends Controller
           $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
           $pesan->update([
               'bukti_pembayaran' => $imgName,
+              'status' => 'Belum Dikonfirmasi',
             ]);
         }else {
           if (\File::exists(public_path('img/'.$image_path))) {
@@ -221,6 +222,7 @@ class PesanController extends Controller
           $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
           $pesan->update([
               'bukti_pembayaran' => $imgName,
+              'status' => 'Belum Dikonfirmasi',
             ]);
         }
     } else{

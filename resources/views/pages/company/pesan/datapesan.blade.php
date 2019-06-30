@@ -41,7 +41,7 @@
                   Tambah
                 </button> --}}
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 {{-- <div class="modal fade" id="exampleModall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -51,79 +51,69 @@
                         </button>
                       </div>
                       <div class="box-body">
-                      <div class="modal-body">
-                  <form class="form-horizontal" action="{{ url('pesan') }}" method="POST">
-                  @csrf
-                      <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
-                            <div class="col-sm-10">
+                        <div class="modal-body">
+                          <form class="form-horizontal" action="{{ url('pesan') }}" method="POST">
+                          @csrf
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
+                              <div class="col-sm-10">
                                 <input type="text" name="company_id" class="form-control" id="inputEmail3" placeholder="company_id">
+                              </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">User ID</label>
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">User ID</label>
+                              <div class="col-sm-10">
                                 <input type="text" name="user_id" class="form-control" id="inputEmail3" placeholder="company_id">
+                              </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Tgl Pesan</label>
-                            <div class="col-sm-10">
-                                <input type="date" name="tgl_pesan" class="form-control" id="inputEmail3" placeholder="Nama">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">Tgl Pesan</label>
+                              <div class="col-sm-10">
+                                  <input type="date" name="tgl_pesan" class="form-control" id="inputEmail3" placeholder="Nama">
+                              </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
-                            <div class="col-sm-10">
-                                <input type="time" name="jam_id" class="form-control" id="inputEmail3" placeholder="Jam">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
+                              <div class="col-sm-10">
+                                  <input type="time" name="jam_id" class="form-control" id="inputEmail3" placeholder="Jam">
+                              </div>
                             </div>
-                          {{-- <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
-                          <div class="col-sm-10">
-                            <select class="form-control" id="inputEmail3">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
-                          </div> --}}
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Desc Pesan</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="deskripsi_pesan" class="form-control" id="inputEmail3" placeholder="Deskripsi Pesan">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">Desc Pesan</label>
+                              <div class="col-sm-10">
+                                  <input type="text" name="deskripsi_pesan" class="form-control" id="inputEmail3" placeholder="Deskripsi Pesan">
+                              </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Struk Pembayaran</label>
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">Struk Pembayaran</label>
+                              <div class="col-sm-10">
                                 <input type="file" name="bukti_pembayaran" class="form-control" id="inputEmail3" placeholder="Bukti Pembayaran">
+                              </div>
                             </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" id="inputEmail3">
+                                  <option value="Belum Dibayar">Belum Dibayar</option>
+                                  <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                                  <option value="Dikonfirmasi">Dikonfirmasi</option>
+                                  <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                                  <option value="Selesai">Selesai</option>
+                                  <option value="Batal">Batal</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-success">Simpan</button>
+                            </div>
+                          </form>
                         </div>
-                        <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
-                          <div class="col-sm-10">
-                            <select class="form-control" id="inputEmail3">
-                              <option value="Belum Dibayar">Belum Dibayar</option>
-                              <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
-                              <option value="Dikonfirmasi">Dikonfirmasi</option>
-                              <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
-                              <option value="Selesai">Selesai</option>
-                              <option value="Batal">Batal</option>
-                            </select>
-                          </div>
-                        </div>
+                      </div> 
+                    </div>
                   </div>
-                   <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
-                  </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-                <a href="/export-pesan" class="btn btn-success fa fa-print"> Print </a>                
+                </div> --}}
+                <a href="/export-pesan" class="btn btn-success fa fa-print"> Print </a>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -162,6 +152,9 @@
                               <form action="{{url('pesan/'.$pesans->id) }}" method="POST" class="text-center">
                                 @csrf
                                 @method('DELETE')
+                                <button type="button" class="btn btn-success btn-xs" onclick="showKonfirmasi({{ $pesans->id }}, {{ $pesans->company_id }})">
+                                  <i class="fa fa-check btn btn-success"></i>
+                                </button>
                                 <a href="{{url('pesan/'.$pesans->id.'') }}" class="fa fa-info btn btn-primary"></a>
                                 <a href="{{url('pesan/'.$pesans->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
                                 <button type="submit" class="fa fa-trash btn btn-danger"></button>
@@ -190,6 +183,41 @@
         <!-- /.row -->
       </section>
 
+              <!-- Modal -->
+        <div class="modal fade" id="modalkonfirmasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pilih Driver</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form class="form-horizontal" action="{{ url('pesan/konfirmasi') }}" method="POST">
+                  @csrf
+                  <input type="hidden" id="pesan_id" name="id">
+                  <div class="form-group">
+                      <label for="inputEmail3" class="col-sm-2 control-label">Driver</label>
+                      <div class="col-sm-10">
+                        <select class="form-control" id="pilihdriver" name="driver_id">
+                          <option value="1"> Bejo </option>
+                          <option value="2"> Paijo </option>
+                          <option value="3"> Jono </option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </form>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
 @endsection
 
 @push('scripts')
@@ -201,5 +229,17 @@
         $(function () {
             $('#table-driver').DataTable();
         });
+
+        function showKonfirmasi(id, company_id){
+          $("#pesan_id").val(id);
+          //get data
+          $.get( "pesan/konfirmasi", function( id ) {
+            $( "pilihdriver" )
+              .append( "Name: " + id.name ) // John
+              .append( "Time: " + id.time ); //  2pm
+          }, "json" );
+          //muncuikan di select option
+          $("#modalkonfirmasi").modal("show");
+        }
     </script>
 @endsection

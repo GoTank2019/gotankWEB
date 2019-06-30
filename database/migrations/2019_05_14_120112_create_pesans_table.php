@@ -16,7 +16,7 @@ class CreatePesansTable extends Migration
         Schema::defaultStringLength(191);
         Schema::create('pesans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedbigInteger('company_id');
+            $table->unsignedbigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->unsignedbigInteger('driver_id')->nullable();
             $table->foreign('driver_id')->references('id')->on('drivers');

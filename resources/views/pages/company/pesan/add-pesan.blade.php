@@ -65,7 +65,7 @@
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
                             <div class="col-sm-10">
-                                <input type="time" name="jam_id" class="form-control" id="inputEmail3">
+                                <input type="time" name="jam_id" class="form-control" id="inputEmail3" value="1">
                             </div>
                           {{-- <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
                           <div class="col-sm-10">
@@ -93,11 +93,11 @@
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
                           <div class="col-sm-10">
-                            <select class="form-control" id="inputEmail3">
+                            <select class="form-control" name="status" id="inputEmail3">
                               <option value="" style="display: none">--Pilih Status--</option>
                               <option value="Belum Dibayar"></option>
                               <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
-                              <option value="Dikonfirmasi">Dikonfirmasi</option>
+                              <option value="Dikonfirmasi" selected>Dikonfirmasi</option>
                               <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
                               <option value="Selesai">Selesai</option>
                               <option value="Batal">Batal</option>
