@@ -36,7 +36,8 @@ Route::get('driver-company', 'API\Company\CompanyController@company');
 Route::get('pesan/getjam', 'API\Pesan\PesanController@getJam')->name('pesan.jam');
 Route::resource('pesan', 'API\Pesan\PesanController')
     ->except(['create', 'update', 'edit']);
-Route::get('pesan/{id}','API\Pesan\PesanController@show');
-Route::get('pesan/detail/{id}','API\Pesan\PesanController@showDetailHistory');
+Route::get('pesan/{id}', 'API\Pesan\PesanController@show');
+Route::get('pesan/detail/{id}', 'API\Pesan\PesanController@showDetailHistory');
 Route::get('showJam', 'API\Pesan\PesanController@showJam')->name('pesan.show');
 Route::post('pesan/bukti/{id}', 'API\Pesan\PesanController@uploadBukti');
+Route::post('pesan/konfirmasi/{id}', 'API\Pesan\PesanController@driverKonfirmasi');

@@ -59,9 +59,9 @@ class PesanController extends Controller
             'status' => 1,
             'message'   => 'Success',
             'data' => $data_jam
-            
+
         ];
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 
     public function store(Request $request)
@@ -114,10 +114,10 @@ class PesanController extends Controller
         // $id = Auth::user()->id;
         //menampilkan data dengan inner join
         $history = DB::table('pesans')
-                    ->join('companies','companies.id','=','pesans.company_id')
-                    ->select('pesans.id','companies.name','companies.avatar','pesans.tgl_pesan','pesans.status')
-                    ->where('pesans.user_id',$id)
-                    ->get();
+            ->join('companies', 'companies.id', '=', 'pesans.company_id')
+            ->select('pesans.id', 'companies.name', 'companies.avatar', 'pesans.tgl_pesan', 'pesans.status')
+            ->where('pesans.user_id', $id)
+            ->get();
         return response()->json([
             'message' => 'Berhasil',
             'status' => 1,
@@ -128,30 +128,30 @@ class PesanController extends Controller
     public function showDetailHistory($id)
     {
         $pesan = DB::table('pesans')
-                        ->join('companies', 'companies.id', '=', 'pesans.company_id')
-                        ->select('pesans.id','companies.name','companies.avatar','companies.harga','pesans.tgl_pesan','pesans.status','pesans.user_id','pesans.driver_id')
-                        ->where('pesans.id',$id)
-                        ->first();
-        $user = User::where('id',$pesan->user_id)->first();
-        $driver = Driver::where('id',$pesan->driver_id)->first();
+            ->join('companies', 'companies.id', '=', 'pesans.company_id')
+            ->select('pesans.id', 'companies.name', 'companies.avatar', 'companies.harga', 'pesans.tgl_pesan', 'pesans.status', 'pesans.user_id', 'pesans.driver_id')
+            ->where('pesans.id', $id)
+            ->first();
+        $user = User::where('id', $pesan->user_id)->first();
+        $driver = Driver::where('id', $pesan->driver_id)->first();
         // $company = Company::where('id', $pesan->company_id)->first();
         if ($driver == null) {
             return response()->json([
-            'message' => 'Berhasil',
-            'status' => 1,
-            'data' => [
-                'id' => $pesan->id,
-                'name' => $pesan->name,
-                'harga' => $pesan->harga,
-                'avatar' => $pesan->avatar,
-                'tgl_pesan' => $pesan->tgl_pesan,
-                'status' => $pesan->status,
-                'user' => [
-                    'id' => $user->id,
-                    'address' => $user->address
+                'message' => 'Berhasil',
+                'status' => 1,
+                'data' => [
+                    'id' => $pesan->id,
+                    'name' => $pesan->name,
+                    'harga' => $pesan->harga,
+                    'avatar' => $pesan->avatar,
+                    'tgl_pesan' => $pesan->tgl_pesan,
+                    'status' => $pesan->status,
+                    'user' => [
+                        'id' => $user->id,
+                        'address' => $user->address
+                    ]
                 ]
-            ]
-        ]);
+            ]);
         }
         return response()->json([
             'message' => 'Berhasil',
@@ -167,7 +167,7 @@ class PesanController extends Controller
                     'id' => $user->id,
                     'address' => $user->address
                 ],
-                'driver' =>[
+                'driver' => [
                     'id' => $driver->id,
                     'name' => $driver->name
                 ]
@@ -188,7 +188,7 @@ class PesanController extends Controller
                 'status' => 0,
                 'message' => 'Not Found',
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'status' => 1,
                 'message' => 'Berhasil',
@@ -199,45 +199,78 @@ class PesanController extends Controller
 
     public function uploadBukti(Request $request, $id)
     {
-      $pesan = Pesan::find($id);
+        $pesan = Pesan::find($id);
 
-      if ($request->bukti_pembayaran) {
-        $image_path = $pesan->bukti_pembayaran;
-        if ($image_path == null ) {
-          $imgName = $request->file('bukti_pembayaran')->getClientOriginalName();
-          $request->file('bukti_pembayaran')->move('img', $imgName);
+        if ($request->bukti_pembayaran) {
+            $image_path = $pesan->bukti_pembayaran;
+            if ($image_path == null) {
+                $imgName = $request->file('bukti_pembayaran')->getClientOriginalName();
+                $request->file('bukti_pembayaran')->move('img', $imgName);
 
-          $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
-          $pesan->update([
-              'bukti_pembayaran' => $imgName,
-              'status' => 'Belum Dikonfirmasi',
-            ]);
-        }else {
-          if (\File::exists(public_path('img/'.$image_path))) {
-              \File::delete(public_path('img/'.$image_path));
-          }
-          $imgName = $request->file('bukti_pembayaran')->getClientOriginalName();
-          $request->file('bukti_pembayaran')->move('img', $imgName);
+                $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
+                $pesan->update([
+                    'bukti_pembayaran' => $imgName,
+                    'status' => 'Belum Dikonfirmasi',
+                ]);
+            } else {
+                if (\File::exists(public_path('img/' . $image_path))) {
+                    \File::delete(public_path('img/' . $image_path));
+                }
+                $imgName = $request->file('bukti_pembayaran')->getClientOriginalName();
+                $request->file('bukti_pembayaran')->move('img', $imgName);
 
-          $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
-          $pesan->update([
-              'bukti_pembayaran' => $imgName,
-              'status' => 'Belum Dikonfirmasi',
-            ]);
+                $pesan->bukti_pembayaran = $request->file('bukti_pembayaran')->getClientOriginalName();
+                $pesan->update([
+                    'bukti_pembayaran' => $imgName,
+                    'status' => 'Belum Dikonfirmasi',
+                ]);
+            }
+        } else {
+            return response()->json([
+                'message' => 'Gambar tidak tersimpan',
+                'status' => 0,
+            ], 200);
         }
-    } else{
+
         return response()->json([
-            'message' => 'Gambar tidak tersimpan',
-            'status' => 0,
-        ],200);
+            'status' => 1,
+            'message' => 'Berhasil',
+            'data' => $pesan
+        ], 200);
     }
 
-    return response()->json([
-        'status'=> 1,
-        'message'=> 'Berhasil',
-        'data' => $pesan
-    ],200);
+    public function driverKonfirmasi(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+        ]);
 
+        if ($validator->fails()) {
+            $response = [
+                'message' => 'Status kosong!',
+                'status'  => 0
+            ];
+
+            return response()->json($response, 400);
+        }
+
+        $pesan = Pesan::find($id);
+        $pesan->status = $request->status;
+
+        if ($pesan->save()) {
+            $response = [
+                'message' => 'Sukses konfirmasi!',
+                'status'  => 1,
+                'data'  => $pesan
+            ];
+        } else {
+            $response = [
+                'message' => 'Gagal konfirmasi!',
+                'status'  => 0
+            ];
+        }
+
+        return response()->json($response, 200);
     }
 
     // public function status(Request $request, $id)
@@ -247,7 +280,7 @@ class PesanController extends Controller
     //         $keterangan = $status->status;
 
     //         if ($keterangan == 'Belum Dibayar') {
-                
+
     //         }
     //     }
     // }
