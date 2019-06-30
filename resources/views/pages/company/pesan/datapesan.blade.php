@@ -29,11 +29,11 @@
           <small>advanced tables</small>
         </h1>
       </section>
-  
+
       <!-- Main content -->
       <section class="content">
         <div class="row">
-          <div class="col-xs-12">       
+          <div class="col-xs-12">
             <div class="box">
               <div class="box-header">
                 <a href="{{ url('pesan/create') }}" class="btn btn-success fa fa-plus-square-o"> Tambah </a>
@@ -109,7 +109,7 @@
                             </div>
                           </form>
                         </div>
-                      </div> 
+                      </div>
                     </div>
                   </div>
                 </div> --}}
@@ -152,13 +152,13 @@
                               <form action="{{url('pesan/'.$pesans->id) }}" method="POST" class="text-center">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-success btn-xs" onclick="showKonfirmasi({{ $pesans->id }}, {{ $pesans->company_id }})">
+                                <button type="button" class="btn btn-success btn-xs" onclick="showKonfirmasi({{ $pesans->id }})">
                                   <i class="fa fa-check btn btn-success"></i>
                                 </button>
                                 <a href="{{url('pesan/'.$pesans->id.'') }}" class="fa fa-info btn btn-primary"></a>
                                 <a href="{{url('pesan/'.$pesans->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
                                 <button type="submit" class="fa fa-trash btn btn-danger"></button>
-                              </form>                       
+                              </form>
                           </td>
                         </tr>
                       @endforeach
@@ -194,16 +194,17 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" action="{{ url('pesan/konfirmasi') }}" method="POST">
+                <form id="form_driver" class="form-horizontal" action="{{ url('pesan/konfirmasi') }}" method="POST">
                   @csrf
                   <input type="hidden" id="pesan_id" name="id">
                   <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Driver</label>
                       <div class="col-sm-10">
-                        <select class="form-control" id="pilihdriver" name="driver_id">
-                          <option value="1"> Bejo </option>
-                          <option value="2"> Paijo </option>
-                          <option value="3"> Jono </option>
+                        <select class="form-control" name="driver_id">
+                          <option value="">-Pilih Driver-</option>
+                            @foreach ($drivers as $driver)
+                                <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                            @endforeach
                         </select>
                       </div>
                   </div>
@@ -213,7 +214,7 @@
                   </div>
                 </form>
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -230,16 +231,9 @@
             $('#table-driver').DataTable();
         });
 
-        function showKonfirmasi(id, company_id){
-          $("#pesan_id").val(id);
-          //get data
-          $.get( "pesan/konfirmasi", function( id ) {
-            $( "pilihdriver" )
-              .append( "Name: " + id.name ) // John
-              .append( "Time: " + id.time ); //  2pm
-          }, "json" );
-          //muncuikan di select option
-          $("#modalkonfirmasi").modal("show");
+        function showKonfirmasi(id){
+            $("#pesan_id").val(id);
+            $("#modalkonfirmasi").modal("show");
         }
     </script>
 @endsection

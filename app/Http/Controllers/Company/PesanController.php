@@ -13,6 +13,7 @@ use App\Driver;
 use App\Company;
 use App\User;
 use App\Jam;
+use Auth;
 
 class PesanController extends Controller
 {
@@ -29,8 +30,11 @@ class PesanController extends Controller
 
     public function index()
     {
-        $data_pesan = \App\Pesan::all();
-        return view('pages.company.pesan.datapesan', ['data_pesan' => $data_pesan]);
+        $company_id = Auth::user()->id;
+        $company = Company::find($company_id);
+        $data['drivers'] = $company->drivers()->get();
+        $data['data_pesan'] = $company->pesans()->get();
+        return view('pages.company.pesan.datapesan')->with($data);
     }
 
     /**
@@ -69,7 +73,7 @@ class PesanController extends Controller
         ];
 
         $pesan = Pesan::create($data);
-        if($pesan)
+        if ($pesan)
             return redirect('pesan')->with('sukses', 'Sukses Tambah Data');
 
         return redirect('pesan')->with('error', 'Gagal Tambah Data');
@@ -77,7 +81,7 @@ class PesanController extends Controller
 
     public function konfirmasi(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'driver_id' => 'required',
         ]);
 
@@ -89,8 +93,9 @@ class PesanController extends Controller
 
         $pesan = Pesan::find($pesan_id);
         $pesan->driver_id = $request->driver_id;
+        $pesan->status = "Dikonfirmasi";
 
-        if($pesan->save())
+        if ($pesan->save())
             return redirect('pesan')->with('sukses', 'konfirmasi sukses');
 
         return redirect('pesan')->with('error', 'konfirmasi error');
