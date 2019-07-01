@@ -8,6 +8,7 @@ use App\Exports\DriversExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Driver;
 use App\Company;
+use Auth;
 
 class DriverController extends Controller
 {
@@ -25,6 +26,9 @@ class DriverController extends Controller
     public function index()
     {
         $data_driver = \App\Driver::all();
+        // $driver_id = Auth::user()->id;
+        // $driver = Company::find($driver_id);
+        // $data_driver['drivers'] = $driver->drivers()->get();
         return view('pages.company.driver.datadriver', ['data_driver' => $data_driver]);
     }
 

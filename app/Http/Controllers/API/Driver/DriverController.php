@@ -4,7 +4,13 @@ namespace App\Http\Controllers\API\Driver;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Driver;
+use App\Pesan;
+use App\Company;
+use App\User;
+use Auth;
 
 class DriverController extends Controller
 {
@@ -13,86 +19,39 @@ class DriverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $id)
     {
-        $driver = Driver::all();
-        if ($driver->isEmpty()) {
-            return response()->json([
-                'status' => 0,
-                'message' => 'Not Found'
-            ], 200);
-        }else{
-            return response()->json([
-                'status' => 1,
-                'message' => 'Berhasil',
-                'data' => $driver
-            ],200);
-        }
+      $pesan = DB::table('pesans')
+            ->join('users', 'users.id', '=', 'pesans.user_id')
+            ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status')
+            ->where('pesans.driver_id', $id)
+            ->where('pesans.status', 'Dikonfirmasi')
+            ->get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Berhasil',
+            'data' => $pesan
+        ], 200);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
-        //
+        $pesan = DB::table('pesans')
+            ->join('users', 'users.id', '=', 'pesans.user_id')
+            ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status')
+            ->where('pesans.driver_id', $id)
+            ->where('pesans.status', 'Selesai')
+            ->orWhere('pesans.status', 'Sedang Dikerjakan')
+            ->get();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Berhasil',
+            'data' => $pesan
+        ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

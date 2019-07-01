@@ -25,10 +25,11 @@ Route::put('user/{id}', 'API\User\AuthUserController@updateProfile');
 Route::post('user/image/{id}', 'API\User\AuthUserController@updateImage');
 
 // Driver
-Route::post('driver/register', 'API\Driver\AuthDriverController@register');
+// Route::post('driver/register', 'API\Driver\AuthDriverController@register');
 Route::post('driver/login', 'API\Driver\AuthDriverController@login');
 
-Route::get('driver', 'API\Driver\DriverController@index');
+Route::get('driver/{id}', 'API\Driver\DriverController@index');
+Route::get('driver/histori/{id}', 'API\Driver\DriverController@show');
 Route::get('company-driver', 'API\Company\CompanyController@driver');
 Route::get('driver-company', 'API\Company\CompanyController@company');
 
