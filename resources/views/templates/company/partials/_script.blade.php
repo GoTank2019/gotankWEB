@@ -28,6 +28,8 @@
     <script src="{{asset('backend/bower_components/Flot/jquery.flot.categories.js')}}"></script>
     <!-- Page script -->
     @yield('myjs')
+
+    @yield('chartJS')
     
     <script>
     function labelFormatter(label, series) {

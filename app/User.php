@@ -3,10 +3,10 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail as VerifyEmailBase;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements VerifyEmailBase
 {
     use Notifiable;
 
@@ -38,5 +38,11 @@ class User extends Authenticatable
     public function pesans()
     {
         return $this->hasMany(Pesan::class);
+    }
+
+    public function sendApiEmailVerificationNotification()
+
+    {
+        $this->notify(new VerifyApiEmailController); // my notification
     }
 }

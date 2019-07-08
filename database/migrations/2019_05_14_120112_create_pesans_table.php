@@ -25,7 +25,7 @@ class CreatePesansTable extends Migration
             $table->date('tgl_pesan');
             $table->unsignedbigInteger('jam_id');
             $table->foreign('jam_id')->references('id')->on('jams');
-            $table->string('deskripsi_pesan', 250)->nullable();
+            // $table->string('deskripsi_pesan', 250)->nullable();
             $table->string('bukti_pembayaran', 250)->nullable();
             $table->enum('status', ['Belum Dibayar', 'Belum Dikonfirmasi',
                         'Dikonfirmasi', 'Sedang Dikerjakan', 'Selesai', 'Batal'])->default('Belum Dibayar');

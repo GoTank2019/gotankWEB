@@ -54,4 +54,19 @@ class DriverController extends Controller
         ], 200);
     }
 
+    public function showDetail($id)
+    {
+        $pesan = DB::table('pesans')
+        ->join('users', 'users.id','=', 'pesans.user_id')
+        ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status')
+            ->where('pesans.id', $id)
+            ->first();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Berhasil',
+            'data' => $pesan
+        ], 200);
+    }
+
 }

@@ -1,89 +1,145 @@
 @extends('templates.company.default')
 
-@section('title','Dashboard')
-
-@push('css')
-
-@endpush
-
 @section('content')
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            General Form Elements
-            <small>Preview</small>
-          </h1>
-        </section>
-    
-        <!-- Main content -->
-        <section class="content">
-          <div class="row">
-            <!-- right column -->
-            <div class="col-xs-12">
-              <!-- Horizontal Form -->
-              <div class="box box-info">
-                <div class="box-header with-border">
-                  <a href="{{ url('pesan') }}" class="fa fa-arrow-left btn btn-warning" > Kembali</a>
-                  <br>
-                  <br>
-                  <h3 class="box-title">Detail Driver</h3>
-                </div>
-                <div class="box">
-                  <div class="box-header">
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table id="table-company" class="table table-bordered table-striped">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Detail Pemesanan
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li><a href="{{ url('pesan') }}" class="fa fa-arrow-left btn btn-warning" > Kembali</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+            <div class="box-body">
+                <table id="table-driver" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th style="width: 10px">No</th>
-                    <th style="width: 40px">Company ID</th>
+                    <th style="width: 40px">Company Name</th>
+                    <th style="width: 40px">Driver Name</th>
                     <th style="width: 80px">Tgl Pesan</th>
                     <th style="width: 50px">Jam</th>
-                    <th style="width: 150px">Desc Pesan</th>
                     <th style="width: 100px">Upload Struck</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
+                    <th >Status</th>
+                    {{-- <th>Aksi</th> --}}
                   </tr>
                   </thead>
                   <tbody>
                     @php
-                    $no = 1;
+                      $no = 1;
                     @endphp
 
                     {{-- cek data di database --}}
-                    <tr>
-                       
+                    @if(sizeof($data_pesan)>0)
+                      @foreach($data_pesan as $pesans)
                         <tr>
                           <td>{{ $no++ }}</td>
                           <td>
-                            {{ $data_pesan->company_id }}
+                            {{ $data_pesan->company->name }}
+                          </td>
+                          <td>
+                            {{ $data_pesan->driver->name }}
                           </td>
                           <td>{{ $data_pesan->tgl_pesan }}</td>
-                          <td>{{ $data_pesan->jam_id }}</td>
-                          <td>{{ $data_pesan->deskripsi_pesan }}</td>
+                          <td>{{ $data_pesan->jam->jam }}</td>
                           <td>{{ $data_pesan->bukti_pembayaran }}</td>
                           <td>{{ $data_pesan->status }}</td>
-                          <td>
-                    </tr>
+                        </tr>
+                      @endforeach
 
-                      </tbody>
-                      <tfoot>
-                      </tfoot>
-                    </table>
-                  </div>
+                    @else
+                      <tr>
+                        <td class="text-center" colspan="6"><i>Tidak ada data</i></td>
+                      </tr>
+                    @endif
+
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+                </table>
+            </div>
+            </div>
+              <!-- /.box-body -->
+            <div class="box-body">
+              <div class="tab-pane">
+                <div id="grafikPesan">
+                  
                 </div>
               </div>
-              </div>
-              <!-- /.box -->
             </div>
-            <!--/.col (right) -->
           </div>
-          <!-- /.row -->
-        </section>
-        <!-- /.content -->
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+        </div>
 
+    </section>
+    <!-- /.content -->
 @endsection
 
-@push('scripts')
+@section('chartJS')
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script>
+    Highcharts.chart('grafikPesan', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Laporan Data Pemesanan'
+        },
+        xAxis: {
+            categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Presentase'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            // pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //     '<td style="padding:0"><b>{point.y:.1f} kali</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Pemesanan/Bulan',
+            data: [{!! json_encode($datas) !!},
+            20,
+            15
+            ]
 
-@endpush
+        }]
+    });
+  </script>
+@endsection

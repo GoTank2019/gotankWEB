@@ -22,6 +22,7 @@
     <!--  Main navigation  -->
     <ul class="main-nav nav navbar-nav navbar-right">
       <li><a href="#home">Home</a></li>
+      <li><a href="#gabung">Gabung</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#service">Service</a></li>
       <!-- <li><a href="#team">Team</a></li> -->
@@ -29,8 +30,8 @@
       @auth('company')
       <li><a href="{{route('dashboard')}}">Beranda</a></li>
       @else
-      <li><a href="{{route('login')}}">Login</a></li>
-      <li><a href="{{route('register')}}">Register</a></li>
+      {{-- <li><a href="{{route('login')}}">Login</a></li>
+      <li><a href="{{route('register')}}">Register</a></li> --}}
       @endauth
     </ul>
     <!-- /Main navigation -->
@@ -52,10 +53,6 @@
           </p>
 
           <br>
-          <p class="white-text">
-            
-          </p>
-
           <br>
           <br>
           <p class="white-text">Pengguna Jasa bisa Download App di bawah</p>

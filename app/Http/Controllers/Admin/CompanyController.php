@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Company;
+use App\Company;
+use App\Admin;
 
 class CompanyController extends Controller
 {
@@ -43,7 +44,7 @@ class CompanyController extends Controller
 
         $company->save();
 
-        return redirect('admin/company');
+        return redirect('admin/company')->with('sukses', 'Jam Berhasil Ditambah');
     }
 
     public function edit($id)
@@ -73,5 +74,16 @@ class CompanyController extends Controller
         $company->save();
 
         return redirect('admin/company');
+    }
+
+    public function show(Request $request, $id)
+    {
+        $data_company = Company::find($id);
+        // $data_company = \App\Company::all();
+        // $company = $request->user()->id;
+        // $data_driver = Driver::findOrFail($id);
+        return view('pages.admin.company.detail-company',['data_company' => $data_company]);
+        // $data_driver = Driver::findorFail($id);
+        // return view('pages.company.driver.detail-driver', [$data_driver => Driver::findOrFail($id)]);
     }
 }

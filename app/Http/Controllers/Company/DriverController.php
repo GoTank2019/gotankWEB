@@ -25,11 +25,12 @@ class DriverController extends Controller
     
     public function index()
     {
-        $data_driver = \App\Driver::all();
-        // $driver_id = Auth::user()->id;
-        // $driver = Company::find($driver_id);
-        // $data_driver['drivers'] = $driver->drivers()->get();
-        return view('pages.company.driver.datadriver', ['data_driver' => $data_driver]);
+        $company_id = Auth::user()->id;
+        $company = Company::find($company_id);
+        $data ['data_driver'] = $company->drivers()->get(); 
+        return view('pages.company.driver.datadriver')->with($data);
+        // $data_driver = \App\Driver::all();
+        // return view('pages.company.driver.datadriver', ['data_driver' => $data_driver]);
     }
 
     /**

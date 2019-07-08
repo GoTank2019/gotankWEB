@@ -37,9 +37,16 @@
         </li>
 
       <li>
-        <a href="#">
+        <a href="{{ url('admin/pesan') }}">
           <i class="fa fa-folder"></i>
           <span>Pesan</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="{{ url('admin/jam') }}">
+          <i class="fa fa-clock-o"></i>
+          <span>Jam</span>
         </a>
       </li>
 

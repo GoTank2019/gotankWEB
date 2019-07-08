@@ -36,6 +36,12 @@
                   @csrf
                   <div class="box-body">
                         <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="company_id" class="form-control" id="inputEmail3" placeholder="Masukan Company ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Nama">

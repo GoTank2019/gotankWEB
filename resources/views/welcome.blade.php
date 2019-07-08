@@ -50,6 +50,8 @@
     </header>
     <!-- /Header -->
 
+        @include('templates.landing._login-register')
+
     <!-- About -->
         @include('templates.landing._about')
     <!-- /About -->

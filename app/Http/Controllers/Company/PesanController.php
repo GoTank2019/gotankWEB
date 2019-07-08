@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Exports\PesansExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Barryvdh\DomPDF\Facade;
 use Carbon\Carbon;
 use App\Pesan;
 use App\Driver;
@@ -14,6 +16,7 @@ use App\Company;
 use App\User;
 use App\Jam;
 use Auth;
+use PDF;
 
 class PesanController extends Controller
 {
@@ -34,6 +37,7 @@ class PesanController extends Controller
         $company = Company::find($company_id);
         $data['drivers'] = $company->drivers()->get();
         $data['data_pesan'] = $company->pesans()->get();
+        // $data['users'] = User::all();
         return view('pages.company.pesan.datapesan')->with($data);
     }
 
@@ -107,10 +111,30 @@ class PesanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $company_id)
     {
-        $data_pesan = \App\Pesan::find($id);
-        return view('pages.company.pesan.detail-pesan', ['data_pesan' => $data_pesan]);
+        $data_pesan = Pesan::first();
+        $company = Company::find($company_id);
+        // Menyiapkan data untuk Charts
+        // $categories = [];
+        // $data = [];
+        // $data[] = Pesan::all();
+        
+        $datas[] = Pesan::count();
+
+        // foreach ($data_pesan as $pesans) {
+            // $categories[] = $pesans->company->name;
+            // $data[] = $pesans->company;
+            // $data[] = $pesans->driver;
+            // $data[] = $pesans->user;
+            // $data[] = $pesans->jam;
+            // $data[] = $pesans->pesans;
+            // $data[] = Pesan::all();
+            // $datas[] = Pesan::count();
+        // }
+        // dd($data);
+        // dd($categories);
+        return view('pages.company.pesan.detail-pesan', ['data_pesan' => $data_pesan,'datas' => $datas]);
     }
 
     /**
@@ -149,6 +173,36 @@ class PesanController extends Controller
 
     public function export()
     {
+        // $company_id = Auth::user()->id;
+        // $company = Company::find($company_id);
+        // $data['drivers'] = $company->drivers()->get();
+        // $data['data_pesan'] = $company->pesans()->get();
+
         return Excel::download(new PesansExport, 'Data-Pesan.xlsx');
+
+        // return (new PesansExport)->download('datapesan.xlsx');
+    }
+
+    // public function showPDF()
+    // {
+    //     $company_id = Auth::user()->id;
+    //     $company = Company::find($company_id);
+    //     $data['drivers'] = $company->drivers()->get();
+    //     $data['data_pesan'] = $company->pesans()->get();
+    //     // $data['users'] = User::all();
+    //     return view('pages.company.pesan.show-PDF')->with($data);
+    // }
+
+    public function cetakpdf()
+    {
+        // $company_id = Auth::user()->id;
+        // $company = Company::find($company_id);
+        // $data['drivers'] = $company->drivers()->get();
+        // $data['data_pesan'] = $company->pesans()->get();
+
+        $data_pesan = Pesan::all();
+
+        $pdf = PDF::loadView('export.pesanPDF', ['data_pesan' => $data_pesan]);
+        return $pdf->download('pesanPDF');
     }
 }

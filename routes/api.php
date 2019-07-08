@@ -24,12 +24,16 @@ Route::get('user/{id}', 'API\User\AuthUserController@show');
 Route::put('user/{id}', 'API\User\AuthUserController@updateProfile');
 Route::post('user/image/{id}', 'API\User\AuthUserController@updateImage');
 
+Route::get('email/verify/{id}', 'API\User\VerificationApiController@verify')->name('verificationapi.verify');
+
+Route::get('email/resend', 'API\User\VerificationApiController@resend')->name('verificationapi.resend');
+
 // Driver
 // Route::post('driver/register', 'API\Driver\AuthDriverController@register');
 Route::post('driver/login', 'API\Driver\AuthDriverController@login');
-
 Route::get('driver/{id}', 'API\Driver\DriverController@index');
 Route::get('driver/histori/{id}', 'API\Driver\DriverController@show');
+Route::get('driver/detail/{id}','API\Driver\DriverController@showDetail');
 Route::get('company-driver', 'API\Company\CompanyController@driver');
 Route::get('driver-company', 'API\Company\CompanyController@company');
 

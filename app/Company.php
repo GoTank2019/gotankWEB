@@ -13,6 +13,7 @@ use Auth;
 
 class Company extends Authenticatable implements MustVerifyEmail
 {
+  use Notifiable;
 
   protected $guarded = [];
 

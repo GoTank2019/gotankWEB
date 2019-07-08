@@ -4,6 +4,20 @@
   <div class="register-logo">
     <a href=""><b>GO-</b>TANK</a>
   </div>
+    @if (session('message'))
+          <div class="box-body">
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+              </button>
+              <h4>
+                <i class="icon fa fa-check"></i>
+                Sukses !!!
+              </h4>
+              {{ session('message') }}
+            </div>
+          </div>
+          @endif
 
   <div class="register-box-body">
     <p class="login-box-msg">BERGABUNG DENGAN KAMI SEKARANG!</p>
@@ -50,6 +64,17 @@
       </div>
 
       <div class="form-group has-feedback">
+        <input id="name" placeholder="Masukan Harga" type="text" class="form-control{{ $errors->has('harga') ? ' is-invalid' : '' }}" name="harga" value="{{ old('harga') }}" required autofocus>
+
+        @if ($errors->has('harga'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('harga') }}</strong>
+            </span>
+        @endif
+        <span class="glyphicon glyphicon-usd form-control-feedback"></span>
+      </div>
+
+      <div class="form-group has-feedback">
         <input id="password" placeholder="No Telephone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" required>
 
         @if ($errors->has('phone'))
@@ -72,7 +97,7 @@
       </div>
     </form>
 
-    <a href="" class="text-center">Sudah Punya Akun? <b>Login Disini</b></a>
+    <a href="{{route('company.login')}}" class="text-center">Sudah Punya Akun? <b>Login Disini</b></a>
   </div>
   <!-- /.form-box -->
 </div>

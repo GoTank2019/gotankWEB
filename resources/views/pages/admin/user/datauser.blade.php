@@ -51,7 +51,7 @@
                           <td>{{ $no++ }}</td>
                           <td>{{ $u->name }}</td>
                           <td>{{ $u->email }}</td>
-                          <td align = "center"><img src="{{asset('images/'.$u->avatar)}}" width="45px"; height="45px";></td>
+                          <td align = "center"><img src="{{asset('img/'.$u->avatar)}}" width="45px"; height="45px";></td>
                           <td>{{ $u->phone }}</td>
                           <td>{{ $u->address }}</td>
                           <td>

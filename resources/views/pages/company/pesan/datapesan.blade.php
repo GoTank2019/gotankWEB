@@ -36,7 +36,7 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header">
-                <a href="{{ url('pesan/create') }}" class="btn btn-success fa fa-plus-square-o"> Tambah </a>
+                <a href="{{ url('pesan/create') }}" class="btn btn-primary fa fa-plus-square-o"> Tambah </a>
                 {{-- <button type="button" class="btn btn-primary fa fa-plus-square-o" data-toggle="modal" data-target="#exampleModal">
                   Tambah
                 </button> --}}
@@ -113,7 +113,8 @@
                     </div>
                   </div>
                 </div> --}}
-                <a href="/export-pesan" class="btn btn-success fa fa-print"> Print </a>
+                <a href="/export-pesan" class="btn btn-primary fa fa-download"> Data Pesan </a>
+                <a href="/export-PDF" class="btn btn-primary"> Cetak PDF </a>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -121,10 +122,10 @@
                   <thead>
                   <tr>
                     <th style="width: 10px">No</th>
-                    <th style="width: 40px">Company ID</th>
+                    <th style="width: 40px">Company Name</th>
+                    {{-- <th style="width: 40px">Driver Name</th> --}}
                     <th style="width: 80px">Tgl Pesan</th>
                     <th style="width: 50px">Jam</th>
-                    <th style="width: 150px">Desc Pesan</th>
                     <th style="width: 100px">Upload Struck</th>
                     <th >Status</th>
                     <th>Aksi</th>
@@ -141,11 +142,13 @@
                         <tr>
                           <td>{{ $no++ }}</td>
                           <td>
-                            {{ $pesans->company_id }}
+                            {{ $pesans->company->name }}
                           </td>
+                          {{-- <td>
+                            {{ $pesans->driver->name }}
+                          </td> --}}
                           <td>{{ $pesans->tgl_pesan }}</td>
-                          <td>{{ $pesans->jam_id }}</td>
-                          <td>{{ $pesans->deskripsi_pesan }}</td>
+                          <td>{{ $pesans->jam->jam }}</td>
                           <td>{{ $pesans->bukti_pembayaran }}</td>
                           <td>{{ $pesans->status }}</td>
                           <td>

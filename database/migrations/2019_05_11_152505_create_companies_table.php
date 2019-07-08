@@ -21,9 +21,9 @@ class CreateCompaniesTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->bigInteger('harga')->nullable();
-            $table->text('description')->nullable();
             $table->string('avatar')->default('default.jpg');
             $table->text('address')->nullable();
+            $table->text('description')->nullable();
             $table->string('phone',13)->unique();
             $table->rememberToken();
             $table->timestamps();

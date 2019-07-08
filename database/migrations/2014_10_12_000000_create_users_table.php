@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->default('default.jpg')->nullable();
             $table->string('phone',13)->unique();
             $table->text('address');
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

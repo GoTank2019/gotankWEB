@@ -10,14 +10,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            General Form Elements
-            <small>Preview</small>
+            Tambah Pesan
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Forms</a></li>
-            <li class="active">General Elements</li>
-          </ol>
         </section>
     
         <!-- Main content -->
@@ -28,28 +22,28 @@
               <!-- Horizontal Form -->
               <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Horizontal Form</h3>
+                  {{-- <h3 class="box-title">Horizontal Form</h3> --}}
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form class="form-horizontal" action="{{ url('pesan') }}" method="POST">
                   @csrf
-                  <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
+                        {{-- <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
                             <div class="col-sm-10">
-                            <select class="form-control" id="inputEmail3" name="company_id">
-                              <option value="" style="display: none;">-Pilih Company-</option>
-                              @foreach($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->name }}</option>
-                              @endforeach
-{{--                               <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
-                              <option value="Dikonfirmasi">Dikonfirmasi</option>
-                              <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
-                              <option value="Selesai">Selesai</option>
-                              <option value="Batal">Batal</option> --}}
-                            </select>
+                              <select class="form-control" id="inputEmail3" name="company_id">
+                                <option value="" style="display: none;">-Pilih Company-</option>
+                                @foreach($companies as $company)
+                                  <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                @endforeach
+                                <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                                <option value="Dikonfirmasi">Dikonfirmasi</option>
+                                <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                                <option value="Selesai">Selesai</option>
+                                <option value="Batal">Batal</option>
+                              </select>
                           </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">User ID</label>
                             <div class="col-sm-10">
@@ -63,11 +57,27 @@
                             </div>
                         </div>
                         <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label">Pilih Jam</label>
+                            <div class="col-sm-10">
+                              <select class="form-control" id="inputEmail3" name="company_id">
+                                <option value="" style="display: none;">-Pilih Jam-</option>
+                                {{-- @foreach($companies as $company)
+                                  <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                @endforeach --}}
+                                <option value="Belum Dikonfirmasi">1</option>
+                                <option value="Dikonfirmasi">2</option>
+                                <option value="Sedang Dikerjakan">3</option>
+                                <option value="Selesai">4</option>
+                                <option value="Batal">5</option>
+                              </select>
+                          </div>
+                        </div>
+                        {{-- <div class="form-group">
                           <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
                             <div class="col-sm-10">
                                 <input type="time" name="jam_id" class="form-control" id="inputEmail3" value="1">
                             </div>
-                          {{-- <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
+                          <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
                           <div class="col-sm-10">
                             <select class="form-control" id="inputEmail3">
                               <option>1</option>
@@ -76,14 +86,8 @@
                               <option>4</option>
                               <option>5</option>
                             </select>
-                          </div> --}}
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Desc Pesan</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="deskripsi_pesan" class="form-control" id="inputEmail3" placeholder="Deskripsi Pesan">
-                            </div>
-                        </div>
+                          </div>
+                        </div> --}}
                         <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Struk Pembayaran</label>
                             <div class="col-sm-10">
@@ -95,7 +99,7 @@
                           <div class="col-sm-10">
                             <select class="form-control" name="status" id="inputEmail3">
                               <option value="" style="display: none">--Pilih Status--</option>
-                              <option value="Belum Dibayar"></option>
+                              <option value="Belum Dibayar">Belum Dibayar</option>
                               <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
                               <option value="Dikonfirmasi" selected>Dikonfirmasi</option>
                               <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
