@@ -27,7 +27,11 @@ class DriverController extends Controller
     {
         $company_id = Auth::user()->id;
         $company = Company::find($company_id);
-        $data ['data_driver'] = $company->drivers()->get(); 
+        $data ['data_driver'] = $company->drivers()->get();
+        $driver = Driver::where('id', $company->driver_id)->first();
+        if ($driver == null) {
+            return view('pages.company.driver.datadriver')->with($data);
+        }
         return view('pages.company.driver.datadriver')->with($data);
         // $data_driver = \App\Driver::all();
         // return view('pages.company.driver.datadriver', ['data_driver' => $data_driver]);
@@ -40,7 +44,10 @@ class DriverController extends Controller
      */
     public function create()
     {
-        return view('pages.company.driver.add-driver');
+        $company_id = Auth::user()->id;
+        $company = Company::find($company_id);
+        $data ['data_driver'] = $company->drivers()->get();
+        return view('pages.company.driver.add-driver')->with($data);
     }
 
     /**
@@ -52,11 +59,21 @@ class DriverController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+        'name' => 'required|min:3',
+        'email' => 'required|email|max:255|unique:drivers',
+        'password' => 'required|min:6',
+        'phone' => 'required|max:13|min:10|unique:drivers',
+      ]);
         //isian dari form tambah data
         // $data_driver = Company::findOrFail($request->get('id'));
         // $driver = $data_driver->drivers()->get();
 
-        $company_id = $request->company_id;
+        $company_id = Auth::user()->id;
+        $company = Company::find($company_id);
+        $data ['data_driver'] = $company->drivers()->get();
+
+        $company_id = Auth::user()->id;
         $nama = $request->name;
         $email = $request->email;
         $password = $request->password;
@@ -73,7 +90,7 @@ class DriverController extends Controller
 
         $driver->save();
 
-        return redirect('driver')->with('sukses', 'data berhasil ditambah');
+        return redirect('driver')->with('sukses', 'data berhasil ditambah', $data);
     }
 
     /**

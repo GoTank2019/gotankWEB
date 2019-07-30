@@ -19,6 +19,47 @@
             <li class="active">General Elements</li>
           </ol>
         </section>
+
+        @if (session('sukses'))
+                <div class="box-body">
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                      &times;
+                    </button>
+                    <h4>
+                      <i class="icon fa fa-check"></i>
+                      Sukses !!!
+                    </h4>
+                    {{ session('sukses') }}
+                  </div>
+                </div>
+                @endif
+
+                @if (session('error'))
+                  <div class="box-body">
+                    <div class="alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                        &times;
+                      </button>
+                      <h4>
+                        <i class="icon fa fa-check"></i>
+                        Gagal !!!
+                      </h4>
+                      {{ session('error') }}
+                    </div>
+                  </div>
+                  @endif
+
+                {{-- menampilkan error validasi --}}
+                      @if (count($errors) > 0)
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
     
         <!-- Main content -->
         <section class="content">
@@ -28,7 +69,7 @@
               <!-- Horizontal Form -->
               <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Horizontal Form</h3>
+                  <h3 class="box-title">Isi Form Company</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -36,7 +77,7 @@
                   @csrf
                   <div class="box-body">
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
+                            <label for="inputEmail3" class="col-sm-2 control-label">Nama Company</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Masukan Nama">
                             </div>
@@ -57,6 +98,12 @@
                                 <label for="inputEmail3" class="col-sm-2 control-label">No Hp</label>
                             <div class="col-sm-10">
                                 <input type="text" name="phone" class="form-control" id="inputEmail3" placeholder="Masukan No Hp">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Harga</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="harga" class="form-control" id="inputEmail3" placeholder="Masukan Nominal Harga">
                             </div>
                         </div>
                         <div class="form-group">

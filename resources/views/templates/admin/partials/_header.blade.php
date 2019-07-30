@@ -1,6 +1,6 @@
 <header class="main-header">
   <!-- Logo -->
-  <a href="../../index2.html" class="logo">
+  <a href="" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>G</b>TNK</span>
     <!-- logo for regular state and mobile devices -->
@@ -51,7 +51,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profil</a>
+                {{-- <a href="#" class="btn btn-default btn-flat">Profil</a> --}}
               </div>
               <div class="pull-right">
                 <a href="{{ route('admin.logout') }}"

@@ -113,8 +113,8 @@
                     </div>
                   </div>
                 </div> --}}
-                <a href="/export-pesan" class="btn btn-primary fa fa-download"> Data Pesan </a>
-                <a href="/export-PDF" class="btn btn-primary"> Cetak PDF </a>
+                <a href="/export-pesan" class="btn btn-primary"> Cetak Pesan Excel </a>
+                {{-- <a href="/export-pdf" class="btn btn-primary"> Cetak Pesan PDF </a> --}}
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -149,7 +149,8 @@
                           </td> --}}
                           <td>{{ $pesans->tgl_pesan }}</td>
                           <td>{{ $pesans->jam->jam }}</td>
-                          <td>{{ $pesans->bukti_pembayaran }}</td>
+                          <td align ="center"><a href="{{asset('img/'.$pesans->bukti_pembayaran)}}" rel="zoom-id:zoom;opacity-reverse:true"> <img src="{{asset('img/'.$pesans->bukti_pembayaran)}}" width="45px"; height="45px";></a> </td>
+                          {{-- <td>{{ $pesans->bukti_pembayaran }}</td> --}}
                           <td>{{ $pesans->status }}</td>
                           <td>
                               <form action="{{url('pesan/'.$pesans->id) }}" method="POST" class="text-center">
@@ -159,7 +160,7 @@
                                   <i class="fa fa-check btn btn-success"></i>
                                 </button>
                                 <a href="{{url('pesan/'.$pesans->id.'') }}" class="fa fa-info btn btn-primary"></a>
-                                <a href="{{url('pesan/'.$pesans->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
+                                {{-- <a href="{{url('pesan/'.$pesans->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a> --}}
                                 <button type="submit" class="fa fa-trash btn btn-danger"></button>
                               </form>
                           </td>

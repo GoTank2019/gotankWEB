@@ -50,9 +50,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $data = User::find($id);
+        return view('pages.admin.user.detail-user', ['data' => $data]);
     }
 
     /**

@@ -29,6 +29,7 @@ class CreatePesansTable extends Migration
             $table->string('bukti_pembayaran', 250)->nullable();
             $table->enum('status', ['Belum Dibayar', 'Belum Dikonfirmasi',
                         'Dikonfirmasi', 'Sedang Dikerjakan', 'Selesai', 'Batal'])->default('Belum Dibayar');
+            $table->string('komentar')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

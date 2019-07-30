@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/contoh', function () {
+    return 'Berhasil';
+});
+
 // Auth::routes(['verify' => true]);
 
 // Route::get('/editprofile', function() {
@@ -45,9 +49,10 @@ Route::group(['prefix' => '/'], function(){
   //route CRUD pemesanan
   Route::resource('pesan', 'Company\PesanController');
   Route::get('export-pesan', 'Company\PesanController@export')->name('pesan.export');
-  Route::get('export-PDF', 'Company\PesanController@cetakpdf');
+  Route::get('export-pdf', 'Company\PesanController@cetakpdf');
   // Route::get('pesan/grafik', 'Company\PesanController@grafik');
   Route::post('pesan/konfirmasi/', 'Company\PesanController@konfirmasi');
+  Route::get('cek_notif','Company\PesanController@cek');
 
   //route CRUD Company untuk driver
   Route::resource('driver', 'Company\DriverController');
@@ -77,3 +82,17 @@ Route::group(['prefix' => 'admin/'], function(){
 });
 
   // Route::get('email/verify', 'AuthCompany\VerificationController@show')->name('verification.notice');
+
+// use Mail as mail;
+// use App\Mail\SendVerification;
+// Route::get('contoh', function(){
+//   mail::to('jasapokemon3@gmail.com')->send(new SendVerification());
+// });
+Route::get('user/verify/{email}', 'API\User\VerifyApiEmailController@verify')->name('user.verify');
+Route::get('user/verify-success', function(){
+  return 'Berhasil verifikasi'; 
+})->name('user.verify.success');
+
+Route::get('user/verify-failed', function(){
+  echo 'Email tidak ditemukan atau sudah pernah diverifikasi';
+})->name('user.verify.failed');

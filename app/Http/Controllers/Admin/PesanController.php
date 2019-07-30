@@ -26,4 +26,10 @@ class PesanController extends Controller
         // $data['users'] = User::all();
         return view('pages.admin.pesan.datapesan')->with($data);
     }
+
+    public function show(Request $request, $id)
+    {
+        $data = Pesan::find($id);
+        return view('pages.admin.pesan.detail-pesan', ['data' => $data]);
+    }
 }

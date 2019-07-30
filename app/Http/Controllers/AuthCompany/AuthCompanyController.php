@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use App\Company;
 
 class AuthCompanyController extends Controller
 {
     use RegistersUsers;
+    // use AuthenticatesUsers;
 
     public function __construct(){
         $this->middleware('guest:company', ['verified'])->except('logoutCompany');
@@ -47,14 +49,24 @@ class AuthCompanyController extends Controller
 
 
     public function login(Request $request){
+      // $this->validate($request, [
+      //   'email' => 'required|email|max:255|unique:companies',
+      //   'password' => 'required|min:6|max:8|confirmed',
+      // ]);
       $credential = [
         'email' => $request->email,
         'password' => $request->password
       ];
+
+      $company = Company::where('email', $request->email)->first();
+        if(!$company->email_verified_at){
+            return back()->with('error', 'Login Gagal, Verifikasi Email Dahulu');
+        }
+
       if (!Auth::guard('company')->attempt($credential, $request->member)) {
           return back()->withInput($request->only('email','remember'));
       }
-      return redirect()->route('dashboard')->with('message','Berhasil Login, Silahkan Verifikasi Email Dulu !!!');
+      return redirect()->route('dashboard')->with('message','Berhasil Login');
     }
 
     public function logoutCompany(Request $request){

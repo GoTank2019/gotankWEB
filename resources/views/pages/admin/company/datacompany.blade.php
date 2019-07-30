@@ -13,6 +13,47 @@
           Data Company
         </h1>
       </section>
+
+      @if (session('sukses'))
+                <div class="box-body">
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                      &times;
+                    </button>
+                    <h4>
+                      <i class="icon fa fa-check"></i>
+                      Sukses !!!
+                    </h4>
+                    {{ session('sukses') }}
+                  </div>
+                </div>
+                @endif
+
+                @if (session('error'))
+                  <div class="box-body">
+                    <div class="alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                        &times;
+                      </button>
+                      <h4>
+                        <i class="icon fa fa-check"></i>
+                        Gagal !!!
+                      </h4>
+                      {{ session('error') }}
+                    </div>
+                  </div>
+                  @endif
+
+                {{-- menampilkan error validasi --}}
+                      @if (count($errors) > 0)
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
   
       <!-- Main content -->
       <section class="content">
@@ -21,7 +62,7 @@
             <div class="box">
               <div class="box-header">
                 <a href="{{ url('admin/company/create') }}" class="btn btn-success fa fa-plus-square-o"> Tambah </a>
-                <a href="#" class="btn btn-success fa fa-print"> Print </a>                
+                {{-- <a href="#" class="btn btn-success fa fa-print"> Print </a>                 --}}
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -57,7 +98,7 @@
                                 @method('DELETE')
                                 <a href="{{url('admin/company/'.$companies->id) }}" class="fa fa-info btn btn-primary"></a>
                                 <a href="{{url('admin/company/'.$companies->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
-                                <button type="submit" class="fa fa-trash btn btn-danger"></button>
+                                <button type="submit" class="fa fa-trash btn btn-danger" onclick="return confirm('Yakin mau dihapus !!!')"></button>
                               </form>                       
                           </td>
                         </tr>

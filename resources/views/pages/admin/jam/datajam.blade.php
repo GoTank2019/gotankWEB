@@ -68,8 +68,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-                <a href="/export" class="btn btn-success fa fa-download"> Data Driver </a>                
+            </div>           
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -95,12 +94,11 @@
                             {{ $jams->jam }}
                           </td>
                           <td>
-                              <form action="{{url('jam/'.$jams->id) }}" method="POST" class="text-center">
+                              <form action="{{url('admin/jam/'.$jams->id) }}" method="POST" class="text-center">
                                 @csrf
                                 @method('DELETE')
-                                <a href="{{url('jam/'.$jams->id.'') }}" class="fa fa-info btn btn-primary"></a>
-                                <a href="{{url('jam/'.$jams->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
-                                <button type="submit" class="fa fa-trash btn btn-danger"></button>
+                                <a href="{{url('admin/jam/'.$jams->id.'/edit') }}" class="fa fa-edit btn btn-warning" data-toggle="modal" data-target="#exampleModal2"></a>
+                                <button type="submit" class="fa fa-trash btn btn-danger" onclick="return confirm('Yakin mau dihapus !!!')"></button>
                               </form>                       
                           </td>
                         </tr>
@@ -124,8 +122,39 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
+
+        <!-- Modal -->
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Jam</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                  <form class="form-horizontal" action="{{ url('admin/jam'.$jams->id.'/edit') }}" method="POST">
+                  @csrf
+                  <div class="box-body">
+                      <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Jam</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="jam" class="form-control" id="inputEmail3" value="{{ $jams->jam }}">
+                            </div>
+                        </div>
+                  </div>
+                   <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                  </div>
+                    </form>
+                  </div>
+                </div>
+
       </section>
 
+      
 @endsection
 
 @push('scripts')

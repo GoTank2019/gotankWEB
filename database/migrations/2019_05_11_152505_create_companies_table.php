@@ -16,11 +16,11 @@ class CreateCompaniesTable extends Migration
         Schema::defaultStringLength(191);
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name',50);
+            $table->string('email',50)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->bigInteger('harga')->nullable();
+            $table->unsignedbigInteger('harga')->length(6)->nullable();
             $table->string('avatar')->default('default.jpg');
             $table->text('address')->nullable();
             $table->text('description')->nullable();

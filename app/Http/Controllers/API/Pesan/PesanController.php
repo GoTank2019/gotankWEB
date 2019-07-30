@@ -24,7 +24,7 @@ class PesanController extends Controller
     public function getJam(Request $request)
     {
         $company_id = $request->get('company_id');
-        $date = Carbon::parse($request->get('date'));
+        $date = Carbon::parse($request->get('date'))->format('Y-m-d');
         $driver_count = Company::find($company_id)->first()->drivers()->count();
 
         $pesanan =  DB::table('pesans')
@@ -35,23 +35,42 @@ class PesanController extends Controller
             ->get();
 
         $jams = Jam::all();
+        $date_now = Carbon::now()->format('Y-m-d');
+        $jam_now = date('H', strtotime("+3 hours"));
+        $jam_now = (int) $jam_now;
+        $jam_now_ori = (int) date('H');
 
         $data_jam = [];
         $check = FALSE;
-        foreach ($jams as $jam) {
-            foreach ($pesanan as $p) {
-                if ($jam->id == $p->jam_id && $p->total >= $driver_count) {
-                    $check = TRUE;
-                    break;
+
+        if($date == $date_now && $jam_now_ori >= 21){
+            $data_jam = [];
+            
+        } else{
+            foreach ($jams as $jam) {
+                foreach ($pesanan as $p) {
+                    if ($jam->id == $p->jam_id && $p->total >= $driver_count) {
+                        $check = TRUE;
+                        break;
+                    }
                 }
-            }
 
-            if (!$check) {
-                $data_jam[] = $jam;
-            }
+                if($date == $date_now && $jam->value <= $jam_now ){
+                    $check = TRUE;
+                }
 
-            $check = FALSE;
+                if (!$check) {
+                    $data_jam[] = $jam;
+                }
+
+                $check = FALSE;
+            }
         }
+
+             // $data_jam = [
+             //        'date_now' => $date_now,
+             //        'jam_now' => $jam_now_ori,
+             //        'date' => $date];
 
 
 
@@ -129,7 +148,7 @@ class PesanController extends Controller
     {
         $pesan = DB::table('pesans')
             ->join('companies', 'companies.id', '=', 'pesans.company_id')
-            ->select('pesans.id', 'companies.name', 'companies.avatar', 'companies.harga', 'pesans.tgl_pesan', 'pesans.status', 'pesans.user_id', 'pesans.driver_id')
+            ->select('pesans.id', 'companies.name', 'companies.avatar', 'companies.harga', 'pesans.tgl_pesan', 'pesans.status', 'pesans.komentar', 'pesans.user_id', 'pesans.driver_id')
             ->where('pesans.id', $id)
             ->first();
         $user = User::where('id', $pesan->user_id)->first();
@@ -163,6 +182,7 @@ class PesanController extends Controller
                 'avatar' => $pesan->avatar,
                 'tgl_pesan' => $pesan->tgl_pesan,
                 'status' => $pesan->status,
+                'komentar' => $pesan->komentar,
                 'user' => [
                     'id' => $user->id,
                     'address' => $user->address
@@ -289,4 +309,19 @@ class PesanController extends Controller
     //         }
     //     }
     // }
+
+    public function updateKomentar(Request $request, $id)
+    {
+        $pesan = Pesan::find($id);
+        $pesan->update([
+            'komentar' => $request->komentar,
+        ]);
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Ok',
+            'data' => $pesan
+        ], 200);
+
+    }
 }

@@ -24,6 +24,33 @@
           </div>
         </div>
         @endif
+
+        @if (session('error'))
+          <div class="box-body">
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+              </button>
+              <h4>
+                <i class="icon fa fa-check"></i>
+                Gagal !!!
+              </h4>
+              {{ session('error') }}
+            </div>
+          </div>
+          @endif
+
+        {{-- menampilkan error validasi --}}
+              @if (count($errors) > 0)
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              @endif
+                            
         <h1>
           Data Tables
           <small>advanced tables</small>
@@ -54,34 +81,40 @@
                   <form class="form-horizontal" action="{{ url('driver') }}" method="POST">
                   @csrf
                   <div class="box-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Company ID</label>
+                        {{-- <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
                             <div class="col-sm-10">
-                                <input type="text" name="company_id" class="form-control" id="inputEmail3" placeholder="Masukan Company ID">
-                            </div>
-                        </div>
+                            <select class="form-control" name="status" id="inputEmail3">
+                              <option value="" style="display: none">--Company--</option>
+                              @foreach($companies as $company)
+                              <option value="{{ $company->id }}">{{$company->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div> --}}
+
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Nama">
+                                <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Nama" value="{{ old('name') }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Password</label>
                             <div class="col-sm-10">
-                                <input type="password" name="password" class="form-control" id="inputEmail3" placeholder="Password">
+                                <input type="password" name="password" class="form-control" id="inputEmail3" placeholder="Password" value="{{ old('password') }}">
                             </div>
                         </div>
                         <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">No Hp</label>
                             <div class="col-sm-10">
-                                <input type="text" name="phone" class="form-control" id="inputEmail3" placeholder="No Hp">
+                                <input type="text" name="phone" class="form-control" id="inputEmail3" placeholder="No Hp" value="{{ old('phone') }}">
                             </div>
                         </div>
                   </div>
@@ -93,8 +126,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-                <a href="/export" class="btn btn-success fa fa-download"> Data Driver </a>                
+            </div>                
               </div>
               <!-- /.box-header -->
               <div class="box-body">

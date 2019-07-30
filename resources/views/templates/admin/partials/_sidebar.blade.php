@@ -25,28 +25,28 @@
       <li>
           <a href="{{url('admin/user')}}">
             <i class="fa fa-users"></i>
-            <span>User</span>
+            <span>Data User</span>
           </a>
         </li>
 
       <li>
           <a href="{{url('admin/company')}}">
               <i class="fa fa-truck"></i>
-              <span>Company</span>
+              <span>Data Company</span>
           </a>
         </li>
 
       <li>
         <a href="{{ url('admin/pesan') }}">
           <i class="fa fa-folder"></i>
-          <span>Pesan</span>
+          <span>Data Pesan</span>
         </a>
       </li>
 
       <li>
         <a href="{{ url('admin/jam') }}">
           <i class="fa fa-clock-o"></i>
-          <span>Jam</span>
+          <span>Data Jam</span>
         </a>
       </li>
 

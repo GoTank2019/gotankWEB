@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail as VerifyEmailBase;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements VerifyEmailBase
 {
+    use SoftDeletes;
     use Notifiable;
 
     /**
@@ -15,6 +17,7 @@ class User extends Authenticatable implements VerifyEmailBase
      *
      * @var array
      */
+    protected $table = 'users';
     protected $guarded = [];
 
     /**

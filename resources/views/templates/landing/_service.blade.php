@@ -18,7 +18,7 @@
 <!--                     <i class="fa fa-diamond"></i> -->
                     <img src="{{asset('frontend/img/sedotwc.png')}}" height="102" width="102">
                     <h3>Sedot WC</h3>
-                    <p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+                    <p>WC mampet, Wc Penuh Segera pesan di aplikasi Go-Tank</p>
                     {{-- <a href="#">Read more</a> --}}
                 </div>
             </div>
@@ -30,7 +30,7 @@
 <!--                     <i class="fa fa-rocket"></i> -->
                     <img src="{{asset('frontend/img/limbah.png')}}" height="102" width="102">
                     <h3>Sedot Limbah</h3>
-                    <p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+                    <p>Limbah Pabrik juga di atasi dengan Go-Tank loh !!!</p>
                     {{-- <a href="#">Read more</a> --}}
                 </div>
             </div>
@@ -42,7 +42,7 @@
 <!--                     <i class="fa fa-cogs"></i> -->
                     <img src="{{asset('frontend/img/saluranair.png')}}" height="102" width="102">
                     <h3>Sedot Saluran Air</h3>
-                    <p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+                    <p>Saluran air mampet, yuk pesen aja di Go-Tank</p>
                    {{--  <a href="#">Read more</a> --}}
                 </div>
             </div>

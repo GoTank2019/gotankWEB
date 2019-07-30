@@ -5,12 +5,14 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 use Auth;
 use App\Company;
 
 class Driver extends Authenticatable
 {
+    use SoftDeletes;
 	protected $table = 'drivers';
 
     protected $guarded = [];

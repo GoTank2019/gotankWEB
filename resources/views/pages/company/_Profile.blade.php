@@ -12,6 +12,46 @@
         <li class="active">User profile</li>
       </ol>
     </section>
+            @if (session('sukses'))
+                <div class="box-body">
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                      &times;
+                    </button>
+                    <h4>
+                      <i class="icon fa fa-check"></i>
+                      Sukses !!!
+                    </h4>
+                    {{ session('sukses') }}
+                  </div>
+                </div>
+                @endif
+
+                @if (session('error'))
+                  <div class="box-body">
+                    <div class="alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                        &times;
+                      </button>
+                      <h4>
+                        <i class="icon fa fa-check"></i>
+                        Gagal !!!
+                      </h4>
+                      {{ session('error') }}
+                    </div>
+                  </div>
+                  @endif
+
+                {{-- menampilkan error validasi --}}
+                      @if (count($errors) > 0)
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
 
     <!-- Main content -->
     <section class="content">
@@ -26,8 +66,6 @@
 
               <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
 
-              <p class="text-muted text-center">Software Engineer</p>
-
               {{-- @foreach($data_company as $companies) --}}
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
@@ -40,8 +78,16 @@
                   <b>Phone</b> <a class="pull-right">{{ $company->phone }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>About Me</b> <a class="pull-right">{{ $company->description }}</a>
+                  <b>About Me</b> <a class="pull-right" style="height: 60px;">{{ $company->description }}</a>
                 </li>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
                 <li class="list-group-item">
                   <b>Alamat</b> <a class="pull-right">{{ $company->address }}</a>
                 </li>
@@ -77,41 +123,44 @@
                     <label for="inputName" class="col-sm-2 control-label">Nama</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="name" class="form-control" id="inputName" value="{{ $company->name  }}">
+                      <input type="text" name="name" id="inputName" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                     <div class="col-sm-10">
-                      <input type="email" name="email" class="form-control" id="inputEmail" value="{{ $company->email }}">
+                      <input type="email" name="email" class="form-control" id="inputEmail" readonly="" value="{{ $company->email }}">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Phone</label>
                     <div class="col-sm-10">
-                      <input type="text" name="phone" class="form-control" id="inputName" value="{{ $company->phone }}">
+                      <input type="text" name="phone" id="inputName" value="{{old('phone')}}" class="form-control @error('phone') is-invalid @enderror">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Alamat</label>
 
                     <div class="col-sm-10">
-                      <textarea class="form-control" name="address" id="inputExperience">{{ $company->address }}</textarea>
+                      <textarea name="address" id="inputExperience" {{old('address')}}" class="form-control @error('address') is-invalid @enderror">{{ $company->address }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">About Me</label>
-
                     <div class="col-sm-10">
-                      <input type="text" name="description" value="{{$company->description}}" class="form-control" id="inputSkills" placeholder="About Me">
+                      <textarea name="description" id="inputExperience" {{old('description')}}" class="form-control @error('description') is-invalid @enderror">{{$company->description}}</textarea>
                     </div>
+
+                    {{-- <div class="col-sm-10">
+                      <input type="text" name="description" value="{{$company->description}}" class="form-control" id="inputSkills" placeholder="About Me">
+                    </div> --}}
                   </div>
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Photo</label>
 
                     <div class="col-sm-10">
-                      <input type="file" name="avatar" class="form-control" id="inputSkills" >
+                      <input type="file" name="avatar" id="inputSkills" {{old('avatar')}}" class="form-control @error('avatar') is-invalid @enderror">
                     </div>
                   </div>
                   <div class="form-group">

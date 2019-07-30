@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Pesan;
+use App\Driver;
+use App\Company;
+use App\User;
+use App\Jam;
 
 class AdminController extends Controller
 {
@@ -11,7 +16,14 @@ class AdminController extends Controller
       $this->middleware('auth:admin');
     }
 
-    public function index(){
-      return view('pages.admin.dashboard');
+    public function index(Request $request)
+    {
+    	$data_pesan = Pesan::all();
+
+    	// dd('datas');
+
+    	$datas[] = Pesan::count();
+      return view('pages.admin.dashboard', ['data_pesan' => $data_pesan, 'datas' => $datas]);
     }
+
 }

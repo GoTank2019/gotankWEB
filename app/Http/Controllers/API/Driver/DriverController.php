@@ -41,7 +41,7 @@ class DriverController extends Controller
     {
         $pesan = DB::table('pesans')
             ->join('users', 'users.id', '=', 'pesans.user_id')
-            ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status')
+            ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status', 'users.latitude', 'users.longitude')
             ->where('pesans.driver_id', $id)
             ->where('pesans.status', 'Selesai')
             ->orWhere('pesans.status', 'Sedang Dikerjakan')
@@ -58,7 +58,7 @@ class DriverController extends Controller
     {
         $pesan = DB::table('pesans')
         ->join('users', 'users.id','=', 'pesans.user_id')
-        ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status')
+        ->select('pesans.id', 'users.name', 'users.address', 'users.phone', 'users.avatar','pesans.driver_id','pesans.status', 'users.latitude', 'users.longitude')
             ->where('pesans.id', $id)
             ->first();
 

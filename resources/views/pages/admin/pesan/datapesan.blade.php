@@ -35,7 +35,7 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header">
-                <a href="{{ url('pesan/create') }}" class="btn btn-primary fa fa-plus-square-o"> Tambah </a>
+                {{-- <a href="{{ url('pesan/create') }}" class="btn btn-primary fa fa-plus-square-o"> Tambah </a> --}}
                 {{-- <button type="button" class="btn btn-primary fa fa-plus-square-o" data-toggle="modal" data-target="#exampleModal">
                   Tambah
                 </button> --}}
@@ -113,7 +113,6 @@
                   </div>
                 </div> --}}
                 <a href="/export-pesan" class="btn btn-primary fa fa-download"> Data Pesan </a>
-                <a href="pesan/grafik" class="btn btn-primary fa fa-bar-chart"> Liat Grafik </a>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -121,13 +120,13 @@
                   <thead>
                   <tr>
                     <th style="width: 10px">No</th>
-                    <th style="width: 40px">Company Name</th>
-                    <th style="width: 40px">Driver Name</th>
+                    <th style="width: 110px">Company Name</th>
+                    <th style="width: 100px">Driver Name</th>
                     <th style="width: 80px">Tgl Pesan</th>
-                    <th style="width: 50px">Jam</th>
+                    <th style="width: 80px">Jam</th>
                     <th style="width: 100px">Upload Struck</th>
-                    <th >Status</th>
-                    <th>Aksi</th>
+                    <th style="text-align: center;">Status</th>
+                    <th style="text-align: center;">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -149,17 +148,14 @@
                           <td>{{ $pesans->tgl_pesan }}</td>
                           <td>{{ $pesans->jam->jam }}</td>
                           <td align="center"><a href="{{asset('img/'.$pesans->bukti_pembayaran)}}" rel="zoom-id:zoom;opacity-reverse:true"> <img src="{{asset('img/'.$pesans->bukti_pembayaran)}}" width="45px"; height="45px";></a></td>
-                          <td>{{ $pesans->status }}</td>
+                          <td style="text-align: center;">{{ $pesans->status }}</td>
                           <td>
-                              <form action="{{url('pesan/'.$pesans->id) }}" method="POST" class="text-center">
+                              <form action="{{url('admin/pesan/'.$pesans->id) }}" method="POST" class="text-center">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-success btn-xs" onclick="showKonfirmasi({{ $pesans->id }})">
-                                  <i class="fa fa-check btn btn-success"></i>
-                                </button>
-                                <a href="{{url('pesan/'.$pesans->id.'') }}" class="fa fa-info btn btn-primary"></a>
-                                <a href="{{url('pesan/'.$pesans->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
-                                <button type="submit" class="fa fa-trash btn btn-danger"></button>
+                                <a href="{{url('admin/pesan/'.$pesans->id.'') }}" class="fa fa-info btn btn-primary"></a>
+                                {{-- <a href="{{url('pesan/'.$pesans->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
+                                <button type="submit" class="fa fa-trash btn btn-danger"></button> --}}
                               </form>
                           </td>
                         </tr>
@@ -186,7 +182,7 @@
       </section>
 
               <!-- Modal -->
-        <div class="modal fade" id="modalkonfirmasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="modalkonfirmasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -219,7 +215,7 @@
 
             </div>
           </div>
-        </div>
+        </div> --}}
 
 @endsection
 

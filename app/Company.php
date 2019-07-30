@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 use Auth;
 // use App\Driver;
@@ -14,6 +15,8 @@ use Auth;
 class Company extends Authenticatable implements MustVerifyEmail
 {
   use Notifiable;
+
+  use SoftDeletes;
 
   protected $guarded = [];
 

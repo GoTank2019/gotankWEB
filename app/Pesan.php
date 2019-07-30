@@ -14,6 +14,11 @@ class Pesan extends Model
     protected $guarded = [];
     // protected $hidden = ['company_id']
 
+    // public function pesans()
+    // {
+    //     return $this->hasMany(Pesan::class);
+    // }
+
     public function company()
     {
         return $this->belongsTo(Company::class);

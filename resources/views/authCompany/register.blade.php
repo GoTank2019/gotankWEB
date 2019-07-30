@@ -26,11 +26,11 @@
         @csrf
 
       <div class="form-group has-feedback">
-        <input id="name" placeholder="Nama Lengkap" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+        <input id="name" placeholder="Nama Cv" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
         @if ($errors->has('name'))
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('name') }}</strong>
+                <strong>{{ $message }}</strong>
             </span>
         @endif
         <span class="glyphicon glyphicon-user form-control-feedback"></span>

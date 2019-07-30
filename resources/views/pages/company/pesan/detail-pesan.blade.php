@@ -39,7 +39,7 @@
 
                     {{-- cek data di database --}}
                     @if(sizeof($data_pesan)>0)
-                      @foreach($data_pesan as $pesans)
+                      {{-- @foreach($data_pesan as $pesans) --}}
                         <tr>
                           <td>{{ $no++ }}</td>
                           <td>
@@ -53,7 +53,7 @@
                           <td>{{ $data_pesan->bukti_pembayaran }}</td>
                           <td>{{ $data_pesan->status }}</td>
                         </tr>
-                      @endforeach
+                      {{-- @endforeach --}}
 
                     @else
                       <tr>

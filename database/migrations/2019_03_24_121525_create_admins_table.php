@@ -16,9 +16,9 @@ class CreateAdminsTable extends Migration
         Schema::defaultStringLength(191);
         Schema::create('admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('username');
-            $table->string('email')->unique();
+            $table->string('name',50);
+            $table->string('username',50);
+            $table->string('email', 50)->unique();
             $table->string('password');
             $table->string('avatar')->default('default.jpg')->nullable();
             $table->timestamps();

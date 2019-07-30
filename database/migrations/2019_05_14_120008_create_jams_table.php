@@ -17,6 +17,7 @@ class CreateJamsTable extends Migration
         Schema::create('jams', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('jam');
+            $table->integer('value')->default(0);
             $table->timestamps();
         });
     }

@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Alamat</label>
                           <div class="col-sm-10">  
-                            <textarea name="address" value="{{ $data_company->address }}" type="text" class="form-control" rows="3" placeholder="Masukan Alamat"></textarea>
+                            <textarea name="address" value="{{ $data_company->address }}" type="text" class="form-control" rows="3" placeholder="Masukan Alamat">{{ $data_company->address }}</textarea>
                           </div>
                         </div>
                   </div>

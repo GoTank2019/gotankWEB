@@ -67,12 +67,13 @@ class JamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $iddr
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $d_jam = \App\Jam::find($id);
+        return view('pages.admin.jam.datajam', ['d_jam' => $d_jam]);
     }
 
     /**
@@ -84,7 +85,15 @@ class JamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $d_jam = $request->jam;
+
+        $jam = new \App\Jam;
+        $jam->jam = $d_jam;
+
+        $jam->save();
+
+        return redirect('admin/jam')->with('sukses', 'Jam Berhasil Diubah');
+
     }
 
     /**
@@ -95,6 +104,9 @@ class JamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $jam = \App\Jam::find($id);
+        $jam->delete();
+
+        return redirect('admin/jam')->with('sukses', 'data berhasil dihapus');
     }
 }

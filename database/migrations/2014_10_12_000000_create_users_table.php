@@ -16,11 +16,12 @@ class CreateUsersTable extends Migration
         Schema::defaultStringLength(191);
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name', 50);
+            $table->string('email', 50)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('api_token');
+            $table->string('api_token')->nullable();
+            $table->longText('token_gcm')->nullable();
             $table->string('avatar')->default('default.jpg')->nullable();
             $table->string('phone',13)->unique();
             $table->text('address');

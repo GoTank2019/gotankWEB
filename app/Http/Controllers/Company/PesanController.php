@@ -8,7 +8,7 @@ use App\Exports\PesansExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Barryvdh\DomPDF\Facade;
+// use Barryvdh\DomPDF\Facade;
 use Carbon\Carbon;
 use App\Pesan;
 use App\Driver;
@@ -17,6 +17,7 @@ use App\User;
 use App\Jam;
 use Auth;
 use PDF;
+use DB;
 
 class PesanController extends Controller
 {
@@ -48,9 +49,7 @@ class PesanController extends Controller
      */
     public function create()
     {
-        $data['companies'] = Company::all();
-        $jam['jams'] = Jam::all();
-        return view('pages.company.pesan.add-pesan')->with($data, $jam);
+        return view('pages.company.pesan.add-pesan');
     }
 
     /**
@@ -72,6 +71,7 @@ class PesanController extends Controller
             'user_id'       => $request->user_id,
             'tgl_pesan'     => Carbon::parse($request->get('tgl_pesan')),
             'jam_id'        => 1,
+            // 'jam_id'        => $request->jam,
             'status' => $request->status,
             // 'deskripsi_pesan'   => $request->deskripsi_pesan,
         ];
@@ -81,6 +81,47 @@ class PesanController extends Controller
             return redirect('pesan')->with('sukses', 'Sukses Tambah Data');
 
         return redirect('pesan')->with('error', 'Gagal Tambah Data');
+    }
+
+    public function cek()
+    {
+        $token = array();
+
+        $pesan_id = 4;
+        $token_gcm = DB::table('pesans')
+                ->join('users','users.id','=','pesans.user_id')
+                ->select('users.token_gcm')
+                ->where('pesans.id',$pesan_id)
+                ->first()->token_gcm;
+
+            array_push($token,$token_gcm);
+            $apiKey = "AIzaSyC_47A3ViozzLxG91O4XZ12v-TEf20CDVI";
+            $fields = array(
+                'registration_ids'=>$token,
+                'data' => array(
+                    'title'=>"Pesan Baru",
+                    'body'=>"wwoooiii",
+                    'priority' => "high"
+                )
+            );
+
+            $header = array('Authorization:key='.$apiKey,'Content-Type:application/json');
+
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch,CURLOPT_POST,true);
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+            $result = curl_exec($ch);
+            if ($result){
+                echo "ok";
+            } else {
+                echo "000";
+            }
     }
 
     public function konfirmasi(Request $request)
@@ -95,14 +136,51 @@ class PesanController extends Controller
 
         $pesan_id = $request->id;
 
-        $pesan = Pesan::find($pesan_id);
-        $pesan->driver_id = $request->driver_id;
-        $pesan->status = "Dikonfirmasi";
+        $token = array();
+        $token_gcm = DB::table('pesans')
+                ->join('users','users.id','=','pesans.user_id')
+                ->select('users.token_gcm')
+                ->where('pesans.id',$pesan_id)
+                ->first()->token_gcm;
 
-        if ($pesan->save())
-            return redirect('pesan')->with('sukses', 'konfirmasi sukses');
+            array_push($token,$token_gcm);
+            $apiKey = "AIzaSyC_47A3ViozzLxG91O4XZ12v-TEf20CDVI";
+            $fields = array(
+                'registration_ids'=>$token,
+                'data' => array(
+                    'title'=>"Pesan Baru",
+                    'body'=>"Pesanan Anda Telah Dikonfirmasi",
+                    'priority' => "high",
+                    'pesan_id' => $pesan_id
+                )
+            );
 
-        return redirect('pesan')->with('error', 'konfirmasi error');
+            $header = array('Authorization:key='.$apiKey,'Content-Type:application/json');
+
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch,CURLOPT_POST,true);
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+            $result = curl_exec($ch);
+            if ($result){
+                $pesan = Pesan::find($pesan_id);
+                $pesan->driver_id = $request->driver_id;
+                $pesan->status = "Dikonfirmasi";
+
+                if ($pesan->save()){
+                    
+                    return redirect('pesan')->with('sukses', 'konfirmasi sukses');
+                }
+
+                return redirect('pesan')->with('error', 'konfirmasi error');
+            } else {
+                return redirect('pesan')->with('error', 'konfirmasi error');
+            }
     }
 
     /**
@@ -114,7 +192,7 @@ class PesanController extends Controller
     public function show(Request $request, $company_id)
     {
         $data_pesan = Pesan::first();
-        $company = Company::find($company_id);
+        // $company = Company::find($company_id);
         // Menyiapkan data untuk Charts
         // $categories = [];
         // $data = [];
@@ -168,7 +246,10 @@ class PesanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data_driver = \App\Pesan::find($id);
+        $data_driver->delete();
+
+        return redirect('pesan')->with('sukses', 'data berhasil dihapus');
     }
 
     public function export()
@@ -182,16 +263,6 @@ class PesanController extends Controller
 
         // return (new PesansExport)->download('datapesan.xlsx');
     }
-
-    // public function showPDF()
-    // {
-    //     $company_id = Auth::user()->id;
-    //     $company = Company::find($company_id);
-    //     $data['drivers'] = $company->drivers()->get();
-    //     $data['data_pesan'] = $company->pesans()->get();
-    //     // $data['users'] = User::all();
-    //     return view('pages.company.pesan.show-PDF')->with($data);
-    // }
 
     public function cetakpdf()
     {

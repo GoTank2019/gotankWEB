@@ -19,10 +19,7 @@
         <div class="row">
           <div class="col-xs-12">       
             <div class="box">
-              <div class="box-header">
-                {{-- <a href="{{ url('admin/company/create') }}" class="btn btn-success fa fa-plus-square-o"> Tambah </a> --}}
-                <a href="{{url('admin/user/create')}}" class="btn btn-success fa fa-plus-square-o"> Tambah </a>                
-                <a href="#" class="btn btn-success fa fa-print"> Print </a>                
+              <div class="box-header">               
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -35,7 +32,7 @@
                     <th style="width: 10%">Photo</th>
                     <th style="width: 15%">No HP</th>
                     <th style="width: 15%">Alamat</th>
-                    <th>Aksi</th>
+                    <th style="text-align: center;">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -51,16 +48,16 @@
                           <td>{{ $no++ }}</td>
                           <td>{{ $u->name }}</td>
                           <td>{{ $u->email }}</td>
-                          <td align = "center"><img src="{{asset('img/'.$u->avatar)}}" width="45px"; height="45px";></td>
+                          <td align="center"><a href="{{asset('img/'.$u->avatar)}}" rel="zoom-id:zoom;opacity-reverse:true"> <img src="{{asset('img/'.$u->avatar)}}" width="45px"; height="45px";></a></td>
                           <td>{{ $u->phone }}</td>
                           <td>{{ $u->address }}</td>
                           <td>
                               <form action="{{url('admin/user/'.$u->id) }}" method="POST" class="text-center">
                                 @csrf
                                 @method('DELETE')
-                                <a href="" class="fa fa-info btn btn-primary"></a>
-                                <a href="{{url('admin/user/'.$u->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
-                                <button type="submit" class="fa fa-trash btn btn-danger"></button>
+                                <a href="{{url('admin/user/'.$u->id) }}" class="fa fa-info btn btn-primary"></a>
+                                {{-- <a href="{{url('admin/user/'.$u->id.'/edit') }}" class="fa fa-edit btn btn-warning"></a>
+                                <button type="submit" class="fa fa-trash btn btn-danger"></button> --}}
                               </form>                       
                           </td>
                         </tr>
